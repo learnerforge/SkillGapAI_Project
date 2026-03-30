@@ -1,0 +1,15 @@
+Skill_Tag,Severity,Module_Name,Duration,Link,Resource_Type
+SQL Database,High,SQL for Data Analysis (Full Course),4 Hrs,https://youtu.be/HXV3zeQKqGY,Video
+SQL Database,Medium,Advanced SQL Queries,2 Hrs,https://youtu.be/root123,Video
+Excel/Spreadsheets,High,Excel for Data Analysis,3 Hrs,https://youtu.be/rvi7f2J9rT4,Video
+Data Visualization (PowerBI),High,PowerBI Complete Roadmap,5 Hrs,https://youtu.be/3u7W24fC41E,Video
+Machine Learning Models,High,ML for Beginners (Andrew Ng),10 Hrs,https://youtu.be/jGwO_UgTS7I,Video
+Machine Learning Models,Medium,Scikit-Learn Crash Course,2 Hrs,https://youtu.be/pqNCD_5r0IU,Video
+Deep Learning (TensorFlow/PyTorch),High,Intro to Neural Networks,6 Hrs,https://youtu.be/aircllF-4wM,Video
+Big Data (Spark/Hadoop),High,Big Data Engineering Basics,4 Hrs,https://youtu.be/g70M24w-20,Video
+ComputerProgramming,High,Python Basics for Engineers,2 Hrs,https://youtu.be/_uQrJ0TkZlc,Video
+ComputerProgramming,Medium,Data Structures (Arrays),4 Hrs,https://youtu.be/RBSGKlAvoiM,Video
+Logical,High,Logical Reasoning: Patterns,1 Hr,https://youtu.be/xPND7s0O3_0,Video
+ElectronicsAndSemicon,High,Circuit Theory Basics,3 Hrs,https://youtu.be/i88,Video
+Quant,High,Aptitude: Speed Math,1.5 Hrs,https://youtu.be/hJ7,Video
+ComputerScience,Medium,Operating Systems 101,5 Hrs,https://youtu.be/vBURTt97EkA,Video
