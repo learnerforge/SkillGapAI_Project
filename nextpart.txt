@@ -1,0 +1,6 @@
+1.user login,logout,register
+2.save login details and session in database
+3.generate previous path after login and continue from there
+4.option to delete previous path and create new path till tehn only show continution
+5.vedios must be traced and marked as complete after watching and needed to be go to next vedio
+6.this must be updated and after all a small exam and ten show skills are acquired.

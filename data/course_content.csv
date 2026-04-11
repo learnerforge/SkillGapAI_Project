@@ -1,15 +1,24 @@
 Skill_Tag,Severity,Module_Name,Duration,Link,Resource_Type
-SQL Database,High,SQL for Data Analysis (Full Course),4 Hrs,https://youtu.be/HXV3zeQKqGY,Video
-SQL Database,Medium,Advanced SQL Queries,2 Hrs,https://youtu.be/root123,Video
-Excel/Spreadsheets,High,Excel for Data Analysis,3 Hrs,https://youtu.be/rvi7f2J9rT4,Video
-Data Visualization (PowerBI),High,PowerBI Complete Roadmap,5 Hrs,https://youtu.be/3u7W24fC41E,Video
-Machine Learning Models,High,ML for Beginners (Andrew Ng),10 Hrs,https://youtu.be/jGwO_UgTS7I,Video
-Machine Learning Models,Medium,Scikit-Learn Crash Course,2 Hrs,https://youtu.be/pqNCD_5r0IU,Video
-Deep Learning (TensorFlow/PyTorch),High,Intro to Neural Networks,6 Hrs,https://youtu.be/aircllF-4wM,Video
-Big Data (Spark/Hadoop),High,Big Data Engineering Basics,4 Hrs,https://youtu.be/g70M24w-20,Video
-ComputerProgramming,High,Python Basics for Engineers,2 Hrs,https://youtu.be/_uQrJ0TkZlc,Video
-ComputerProgramming,Medium,Data Structures (Arrays),4 Hrs,https://youtu.be/RBSGKlAvoiM,Video
-Logical,High,Logical Reasoning: Patterns,1 Hr,https://youtu.be/xPND7s0O3_0,Video
-ElectronicsAndSemicon,High,Circuit Theory Basics,3 Hrs,https://youtu.be/i88,Video
-Quant,High,Aptitude: Speed Math,1.5 Hrs,https://youtu.be/hJ7,Video
-ComputerScience,Medium,Operating Systems 101,5 Hrs,https://youtu.be/vBURTt97EkA,Video
+SQL Database,High,SQL for Data Analysis,4 Hrs,https://www.udemy.com/course/sql-for-data-analysis,Video
+Excel/Spreadsheets,High,Excel Skills for Business,3 Hrs,https://www.coursera.org/specializations/excel-skills-for-business,Video
+Data Visualization (PowerBI),High,PowerBI Complete Roadmap,5 Hrs,https://www.udemy.com/course/microsoft-power-bi-desktop-for-business-intelligence,Video
+Tableau,High,Data Visualization with Tableau,4 Hrs,https://www.coursera.org/learn/data-visualization-tableau,Video
+Python Data Analysis,High,Python for Everybody,6 Hrs,https://www.coursera.org/specializations/python,Video
+Data Cleaning (Pandas),High,Data Wrangling with Pandas,3 Hrs,https://www.datacamp.com/courses/data-wrangling-with-pandas,Video
+Machine Learning Models,High,Machine Learning by Stanford (Andrew Ng),12 Hrs,https://www.coursera.org/learn/machine-learning,Video
+Deep Learning,High,Deep Learning Specialization,15 Hrs,https://www.coursera.org/specializations/deep-learning,Video
+TensorFlow PyTorch,High,TensorFlow Developer Certificate,10 Hrs,https://www.tensorflow.org/learn,Video
+Computer Vision / NLP,High,Computer Vision & NLP Bootcamp,8 Hrs,https://www.udemy.com/course/computer-vision-python,Video
+Natural Language Processing,High,NLP with Transformers (Hugging Face),6 Hrs,https://huggingface.co/learn/nlp-course,Video
+AWS GCP,High,AWS/GCP Cloud Fundamentals,8 Hrs,https://aws.amazon.com/certification/certified-solutions-architect-associate,Video
+Cloud Platforms AWS GCP,High,Cloud Data Engineering,10 Hrs,https://cloud.google.com/certification/data-engineer,Video
+Spark Big Data,High,Apache Spark for Data Engineering,6 Hrs,https://www.databricks.com/learn,Video
+LLM RAG,High,Building RAG Applications with LLMs,4 Hrs,https://www.deeplearning.ai/courses/building-and-evaluating-rag-systems/,Video
+MLOps,High,MLOps Specialization,8 Hrs,https://www.coursera.org/specializations/mlops-machine-learning-duke,Video
+Git Version Control,Medium,Git & GitHub Bootcamp,3 Hrs,https://www.udemy.com/course/git-and-github-bootcamp,Video
+Docker Kubernetes,Medium,Docker & Kubernetes,5 Hrs,https://www.udemy.com/course/docker-and-kubernetes,Video
+System Design,Medium,System Design Interview Guide,4 Hrs,https://www.tryexponent.com/courses/system-design,Video
+Algorithms Logic,High,Algorithms & Data Structures,8 Hrs,https://www.coursera.org/learn/algorithms-part1,Video
+Logical Reasoning,High,Logical Reasoning Fundamentals,2 Hrs,https://youtu.be/xPND7s0O3_0,Video
+Quantitative Analysis Quant,High,Quantitative Aptitude Mastery,3 Hrs,https://www.udemy.com/course/complete-gmat-quant,Video
+ComputerScience,Medium,Computer Science Fundamentals,5 Hrs,https://www.udemy.com/course/computer-science-fundamentals-rgpv,Video

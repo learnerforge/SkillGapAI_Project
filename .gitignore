@@ -1,0 +1,34 @@
+# Virtual Environment
+myenv/
+venv/
+env/
+*.venv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Models (large files - uncomment if needed)
+# models/*.pkl
+# *.pkl
+
+# Data (user data - don't commit)
+*.db
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log

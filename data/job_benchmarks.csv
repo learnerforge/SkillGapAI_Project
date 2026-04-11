@@ -1,27 +1,37 @@
 Role_ID,Role_Name,Skill_Name,Source_Type,Mapped_Column,Required_Score,Weightage
-DA01,Data Analyst (Entry),Logical Reasoning,AMCAT,Logical,6.5,0.2
-DA01,Data Analyst (Entry),Applied Math (Quant),AMCAT,Quant,6,0.2
-DA01,Data Analyst (Entry),SQL Database,Manual,Self_Rating,7,0.3
-DA01,Data Analyst (Entry),Excel/Spreadsheets,Manual,Self_Rating,7,0.2
-DA01,Data Analyst (Entry),Communication,AMCAT,English,6,0.1
-DA02,Data Analyst (Senior),Python/R Scripting,AMCAT,ComputerProgramming,7.5,0.3
-DA02,Data Analyst (Senior),Data Visualization (PowerBI),Manual,Self_Rating,8,0.3
-DA02,Data Analyst (Senior),Statistical Analysis,AMCAT,Quant,8,0.2
-DA02,Data Analyst (Senior),Business Acumen,Manual,Self_Rating,7,0.2
-ML01,Machine Learning Engineer,Python Programming,AMCAT,ComputerProgramming,8.5,0.3
-ML01,Machine Learning Engineer,Linear Algebra & Stats,AMCAT,Quant,8,0.2
-ML01,Machine Learning Engineer,Algorithms & Logic,AMCAT,Logical,8,0.2
-ML01,Machine Learning Engineer,Machine Learning Models,Manual,Self_Rating,7,0.2
-ML01,Machine Learning Engineer,Data Cleaning (Pandas),Manual,Self_Rating,7.5,0.1
-AI01,AI Engineer,Deep Learning (TensorFlow/PyTorch),Manual,Self_Rating,8,0.3
-AI01,AI Engineer,Computer Vision / NLP,Manual,Self_Rating,7,0.2
-AI01,AI Engineer,Core Computer Science,AMCAT,ComputerScience,7.5,0.2
-AI01,AI Engineer,System Design,Manual,Self_Rating,6.5,0.1
-AI01,AI Engineer,Programming Logic,AMCAT,ComputerProgramming,9,0.2
-DE01,Data Engineer,Database Management (DBMS),AMCAT,ComputerScience,7.5,0.3
-DE01,Data Engineer,Big Data (Spark/Hadoop),Manual,Self_Rating,6.5,0.3
-DE01,Data Engineer,Cloud Platforms (AWS/Azure),Manual,Self_Rating,6,0.2
-DE01,Data Engineer,Coding Proficiency,AMCAT,ComputerProgramming,8,0.2
-SWE01,Software Engineer (General),Coding Basics,AMCAT,ComputerProgramming,7,0.4
-SWE01,Software Engineer (General),Algorithm Design,AMCAT,Logical,7,0.3
-SWE01,Software Engineer (General),Operating Systems,AMCAT,ComputerScience,6.5,0.3
+DA01,Data Analyst (Entry),SQL & Database Management,AMCAT,ComputerScience,7.0,0.25
+DA01,Data Analyst (Entry),Excel & Spreadsheets,AMCAT,Domain,6.5,0.15
+DA01,Data Analyst (Entry),Data Visualization (Tableau/PowerBI),Manual,Self_Rating,7.0,0.20
+DA01,Data Analyst (Entry),Python for Analytics,AMCAT,ComputerProgramming,6.5,0.15
+DA01,Data Analyst (Entry),Logical Reasoning,AMCAT,Logical,6.0,0.15
+DA01,Data Analyst (Entry),Quantitative Analysis,AMCAT,Quant,6.0,0.10
+DA02,Data Analyst (Senior),Advanced SQL & ETL,AMCAT,ComputerScience,8.0,0.20
+DA02,Data Analyst (Senior),Python/R for Statistics,AMCAT,ComputerProgramming,7.5,0.20
+DA02,Data Analyst (Senior),Business Intelligence Tools,Manual,Self_Rating,8.0,0.20
+DA02,Data Analyst (Senior),Statistical Modeling,AMCAT,Quant,7.5,0.15
+DA02,Data Analyst (Senior),Data Wrangling & Cleaning,AMCAT,Domain,7.0,0.15
+DA02,Data Analyst (Senior),Presentation & Communication,AMCAT,English,6.5,0.10
+ML01,Machine Learning Engineer,Python & Data Structures,AMCAT,ComputerProgramming,8.5,0.20
+ML01,Machine Learning Engineer,Machine Learning Algorithms,AMCAT,Quant,8.0,0.20
+ML01,Machine Learning Engineer,Deep Learning Frameworks,Manual,Self_Rating,7.5,0.20
+ML01,Machine Learning Engineer,Feature Engineering,AMCAT,Domain,7.5,0.15
+ML01,Machine Learning Engineer,MLOps & Model Deployment,Manual,Self_Rating,6.5,0.15
+ML01,Machine Learning Engineer,Statistics & Linear Algebra,AMCAT,Quant,8.0,0.10
+AI01,AI Engineer,Advanced Python Programming,AMCAT,ComputerProgramming,9.0,0.20
+AI01,AI Engineer,Deep Learning (TensorFlow/PyTorch),Manual,Self_Rating,8.5,0.20
+AI01,AI Engineer,Natural Language Processing,Manual,Self_Rating,7.5,0.15
+AI01,AI Engineer,Computer Vision,Manual,Self_Rating,7.0,0.15
+AI01,AI Engineer,Large Language Models & RAG,Manual,Self_Rating,8.0,0.15
+AI01,AI Engineer,System Design & Architecture,AMCAT,Logical,7.0,0.15
+DE01,Data Engineer,SQL & Database Systems,AMCAT,ComputerScience,8.0,0.20
+DE01,Data Engineer,Python & Spark,AMCAT,ComputerProgramming,7.5,0.20
+DE01,Data Engineer,Cloud Platforms (AWS/GCP/Azure),Manual,Self_Rating,7.0,0.20
+DE01,Data Engineer,Data Pipeline & ETL Tools,AMCAT,Domain,7.0,0.20
+DE01,Data Engineer,Big Data Technologies,Manual,Self_Rating,6.5,0.10
+DE01,Data Engineer,Containerization & DevOps,Manual,Self_Rating,6.0,0.10
+SWE01,Software Engineer (General),Data Structures & Algorithms,AMCAT,ComputerProgramming,8.0,0.25
+SWE01,Software Engineer (General),Problem Solving & Logic,AMCAT,Logical,7.5,0.20
+SWE01,Software Engineer (General),Version Control & Git,Manual,Self_Rating,6.5,0.10
+SWE01,Software Engineer (General),Object-Oriented Programming,AMCAT,ComputerProgramming,7.0,0.15
+SWE01,Software Engineer (General),System Design Basics,AMCAT,Domain,6.5,0.15
+SWE01,Software Engineer (General),Communication Skills,AMCAT,English,6.0,0.15
