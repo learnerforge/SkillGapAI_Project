@@ -6,6 +6,10 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 import io
+from auth import authenticate_user, register_user, get_user_info, init_auth_db
+
+# Initialize auth database
+init_auth_db()
 
 # CHANGED BACK TO CENTERED TO PERFECTLY FIT YOUR SCREEN!
 st.set_page_config(
@@ -73,6 +77,90 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+# Initialize session state for authentication
+if 'logged_in' not in st.session_state:
+    st.session_state.logged_in = False
+if 'username' not in st.session_state:
+    st.session_state.username = None
+if 'user_id' not in st.session_state:
+    st.session_state.user_id = None
+
+def logout():
+    """Logout function"""
+    st.session_state.logged_in = False
+    st.session_state.username = None
+    st.session_state.user_id = None
+    st.rerun()
+
+def show_login_page():
+    """Display login and registration page"""
+    st.set_page_config(layout="centered")
+    st.markdown("""
+    <div style='text-align: center; padding: 40px 0;'>
+        <h1 style='font-size: 3rem; margin: 0; color: #e94560;'>SkillGap AI Pro</h1>
+        <p style='color: #888; font-size: 1.2rem;'>2026 Market-Ready Employability Analyzer</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    tab_login, tab_register = st.tabs(["🔐 Login", "📝 Register"])
+    
+    with tab_login:
+        st.markdown("### Welcome Back!")
+        login_username = st.text_input("Username", key="login_user")
+        login_password = st.text_input("Password", type="password", key="login_pass")
+        
+        if st.button("Login", use_container_width=True, type="primary"):
+            if not login_username or not login_password:
+                st.error("❌ Please enter both username and password")
+            else:
+                success, user = authenticate_user(login_username, login_password)
+                if success:
+                    st.session_state.logged_in = True
+                    st.session_state.username = login_username
+                    st.session_state.user_id = user[0]
+                    st.success("✅ Login successful! Redirecting...")
+                    st.rerun()
+                else:
+                    st.error("❌ Invalid username or password")
+    
+    with tab_register:
+        st.markdown("### Create Your Account")
+        reg_username = st.text_input("Create Username", key="reg_user")
+        reg_email = st.text_input("Email", key="reg_email")
+        reg_password = st.text_input("Create Password", type="password", key="reg_pass")
+        reg_confirm = st.text_input("Confirm Password", type="password", key="reg_confirm")
+        
+        if st.button("Register", use_container_width=True, type="primary"):
+            if not reg_username or not reg_email or not reg_password:
+                st.error("❌ Please fill all fields")
+            elif reg_password != reg_confirm:
+                st.error("❌ Passwords do not match")
+            elif len(reg_password) < 6:
+                st.error("❌ Password must be at least 6 characters")
+            else:
+                success, message = register_user(reg_username, reg_password, reg_email)
+                if success:
+                    st.success(message)
+                    st.info("🔄 Please go to the Login tab and log in with your credentials")
+                else:
+                    st.error(message)
+
+# Check if user is logged in
+if not st.session_state.logged_in:
+    show_login_page()
+    st.stop()
+
+# User is logged in - show sidebar with logout
+with st.sidebar:
+    user_info = get_user_info(st.session_state.username)
+    st.markdown(f"### 👤 {st.session_state.username}")
+    if user_info and user_info[2]:  # email
+        st.caption(f"📧 {user_info[2]}")
+    st.divider()
+    
+    if st.button("🚪 Logout", use_container_width=True, key="logout_btn"):
+        logout()
 
 # LOAD PHASE 2 MODELS
 try:
