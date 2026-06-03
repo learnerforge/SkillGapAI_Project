@@ -27,16 +27,22 @@ def init_db():
 init_db()
 
 print("Loading SkillGap AI Brain...")
+benchmarks_df = None
+content_df = None
 rf_model = None
 risk_model = None
 try:
     benchmarks_df = pd.read_csv('data/job_benchmarks.csv')
     content_df = pd.read_csv('data/course_content.csv')
+    print("CSV datasets loaded successfully!")
+except Exception as e:
+    print(f"CSV Warning: {e}")
+try:
     rf_model = joblib.load('models/rf_employability_model.pkl')
     risk_model = joblib.load('models/dt_risk_model.pkl')
-    print("Models and CSV datasets loaded successfully!")
+    print("ML models loaded successfully!")
 except Exception as e:
-    print(f"Startup Warning: {e}")
+    print(f"Model Warning: {e}")
 
 print("Loading Phase 4 Enterprise Deep Learning Engine...")
 nlp_model = None
@@ -86,14 +92,14 @@ def get_content_for_skill(skill_name):
     return [{"name": f"Learn {skill_name}", "link": f"https://www.google.com/search?q=learn+{skill_name.replace(' ', '+')}+course+2026", "duration": "Varies", "provider": "Multiple"}]
 
 def calculate_gap(student_scores, selected_skills, target_role, user_id="default"):
-    if benchmarks_df is not None and not benchmarks_df.empty:
+    if isinstance(benchmarks_df, pd.DataFrame) and not benchmarks_df.empty:
         role_rules = benchmarks_df[benchmarks_df['Role_Name'].str.strip() == target_role.strip()]
         if not role_rules.empty:
             return _calculate_gap_csv(role_rules, student_scores, selected_skills, target_role, user_id)
     skills_required, _ = course_db.get_skills_for_role_by_name(target_role)
     if skills_required:
         return _calculate_gap_db(target_role, skills_required, student_scores, selected_skills, user_id)
-    return {"error": "Role not found."}
+    return {"error": "Role not found.", "final_readiness_score": 0, "missing_skills": [], "remedial_roadmap": []}
 
 def _calculate_gap_csv(role_rules, student_scores, selected_skills, target_role, user_id):
     readiness_score = 0

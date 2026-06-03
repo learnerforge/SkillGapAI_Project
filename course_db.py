@@ -33,8 +33,10 @@ def get_courses(skill=None, difficulty=None, provider=None, limit=50, offset=0):
     conn = get_conn()
     conditions = []
     params = []
+    join = ""
     if skill:
-        conditions.append("EXISTS (SELECT 1 FROM course_skills cs WHERE cs.course_id = c.course_id AND cs.normalized_skill_name = ?)")
+        join = "JOIN course_skills cs ON cs.course_id = c.course_id"
+        conditions.append("cs.normalized_skill_name = ?")
         params.append(skill)
     if difficulty:
         conditions.append("c.difficulty = ?")
@@ -43,7 +45,7 @@ def get_courses(skill=None, difficulty=None, provider=None, limit=50, offset=0):
         conditions.append("c.provider_id = ?")
         params.append(provider)
     where = " AND ".join(conditions) if conditions else "1=1"
-    query = f"SELECT c.* FROM courses c WHERE {where} ORDER BY c.data_quality_score DESC LIMIT ? OFFSET ?"
+    query = f"SELECT DISTINCT c.course_id, c.title, c.url, c.provider_name, c.difficulty, c.duration, c.price_type, c.certificate_available, c.credential_type, c.data_quality_score, c.language, c.category FROM courses c {join} WHERE {where} ORDER BY c.data_quality_score DESC LIMIT ? OFFSET ?"
     params.extend([limit, offset])
     courses = dict_fetch(conn, query, params)
     conn.close()
