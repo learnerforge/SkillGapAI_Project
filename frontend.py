@@ -484,7 +484,7 @@ with tab3:
             if priority_1:
                 for r in priority_1[:8]:
                     diff_badge = f" [{r.get('difficulty', 'N/A').title()}]" if r.get('difficulty') else ""
-                    cert_badge = " 🏅" if r.get('certificate_available') else ""
+                    cert_badge = "" if r.get('certificate_available') else ""
                     st.markdown(f"-  **{r.get('title', 'N/A')}**{diff_badge}{cert_badge}\n  *{r.get('provider_name', '')} | Relevance: {r.get('relevance_score', 'N/A')}*")
             else:
                 st.info("No recommended courses found for this role")
@@ -494,7 +494,7 @@ with tab3:
             if priority_2:
                 for r in priority_2[:8]:
                     diff_badge = f" [{r.get('difficulty', 'N/A').title()}]" if r.get('difficulty') else ""
-                    cert_badge = " 🏅" if r.get('certificate_available') else ""
+                    cert_badge = "" if r.get('certificate_available') else ""
                     st.markdown(f"-  **{r.get('title', 'N/A')}**{diff_badge}{cert_badge}\n  *{r.get('provider_name', '')} | Score: {r.get('relevance_score', 'N/A')}*")
             else:
                 st.info("No foundation courses found")
@@ -535,8 +535,8 @@ with tab3:
         cols = st.columns(3)
         for i, p in enumerate(top_providers):
             with cols[i % 3]:
-                cert_icon = "🏅" if p.get('certificate_supported') else ""
-                free_icon = "🆓" if p.get('free_courses_available') else ""
+                cert_icon = "" if p.get('certificate_supported') else ""
+                free_icon = "" if p.get('free_courses_available') else ""
                 st.markdown(f"**{p.get('provider_name', 'N/A')}** {cert_icon}{free_icon}\nTrust: {p.get('trust_score', 'N/A')}/100\nType: {p.get('provider_type', 'N/A')}")
 
     st.markdown("---\n###  Free Resources to Get Started\n- **Coursera**: [Machine Learning by Stanford](https://coursera.org/learn/machine-learning)\n- **Fast.ai**: [Practical Deep Learning](https://fast.ai)\n- **Hugging Face**: [NLP Course](https://huggingface.co/learn/nlp-course)\n- **Google**: [Cloud Skills Boost](https://www.cloudskillsboost.google)\n- **AWS**: [Free Training](https://aws.amazon.com/training/)")
