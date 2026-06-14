@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import pandas as pd
 import joblib
@@ -287,6 +287,24 @@ def api_register():
     success, message = auth.register_user(username, password, email)
     return jsonify({"success": success, "message": message})
 
+@app.route('/assets/<path:filename>')
+def serve_assets(filename):
+    return send_from_directory('frontend/dist/assets', filename)
+
+@app.route('/<path:filename>')
+def serve_static(filename):
+    if filename.startswith('api/'):
+        return jsonify({"error": "Not found"}), 404
+    try:
+        return send_from_directory('frontend/dist', filename)
+    except:
+        return send_from_directory('frontend/dist', 'index.html')
+
+@app.route('/')
+def serve_index():
+    return send_from_directory('frontend/dist', 'index.html')
+
 if __name__ == '__main__':
     print("Starting SkillGap AI Brain on Port 5000...")
+    print("Frontend: http://127.0.0.1:5000 | API: http://127.0.0.1:5000/api/")
     app.run(debug=False, port=5000)
