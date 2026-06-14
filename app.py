@@ -9,11 +9,12 @@ import pickle
 from sentence_transformers import SentenceTransformer
 
 import course_db
+import auth
 
 app = Flask(__name__)
 CORS(app)
 
-DB_PATH = 'data/skill_progress.db'
+DB_PATH = course_db.DB_PATH
 
 def init_db():
     os.makedirs('data', exist_ok=True)
@@ -153,11 +154,17 @@ def _calculate_gap_db(target_role, skills_required, student_scores, selected_ski
     recommended_links = []
     all_skills_data = []
 
+    # Compute general aptitude baseline from slider scores (scaled 0-10)
+    # student_scores keys are "Logical", "Quant", etc. (not skill names)
+    # so we average them as a proxy for general readiness
+    score_vals = [float(v) for v in student_scores.values() if isinstance(v, (int, float))]
+    default_score = sum(score_vals) / max(len(score_vals), 1) if score_vals else 5.0
+
     weight = 100.0 / len(skills_required) if skills_required else 0
 
     for skill_name in skills_required:
         required_score = 7.0
-        actual_score = 10.0 if skill_name in selected_skills else float(student_scores.get(skill_name, 0.0))
+        actual_score = 10.0 if skill_name in selected_skills else default_score
         gap = required_score - actual_score
         score_contribution = (actual_score / required_score) * weight if required_score > 0 else 0
         if score_contribution > weight:
@@ -261,6 +268,25 @@ def get_providers():
     providers = course_db.get_providers()
     return jsonify(providers)
 
+@app.route('/api/login', methods=['POST'])
+def api_login():
+    data = request.json
+    username = data.get('username', '')
+    password = data.get('password', '')
+    success, user = auth.authenticate_user(username, password)
+    if success:
+        return jsonify({"success": True, "user": {"id": user[0], "username": user[1]}})
+    return jsonify({"success": False, "message": "Invalid username or password"})
+
+@app.route('/api/register', methods=['POST'])
+def api_register():
+    data = request.json
+    username = data.get('username', '')
+    email = data.get('email', '')
+    password = data.get('password', '')
+    success, message = auth.register_user(username, password, email)
+    return jsonify({"success": success, "message": message})
+
 if __name__ == '__main__':
     print("Starting SkillGap AI Brain on Port 5000...")
-    app.run(debug=True, port=5000)
+    app.run(debug=False, port=5000)

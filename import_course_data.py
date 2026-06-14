@@ -3,10 +3,14 @@ import pandas as pd
 import os
 
 DB_PATH = 'data/skill_progress.db'
-EXPORTS_DIR = r"E:\GitHub Projects\course engine\data\exports"
+EXPORTS_DIR = os.environ.get('COURSE_EXPORTS_DIR', r"data\exports")
 
 def get_csv_path(filename):
-    return os.path.join(EXPORTS_DIR, filename)
+    path = os.path.join(EXPORTS_DIR, filename)
+    if not os.path.exists(path):
+        alt = os.path.join(os.path.dirname(DB_PATH), 'exports', filename)
+        return alt
+    return path
 
 def import_providers(conn):
     df = pd.read_csv(get_csv_path('1_providers.csv'))

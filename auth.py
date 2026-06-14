@@ -1,10 +1,9 @@
-import streamlit as st
 import hashlib
 import sqlite3
 from datetime import datetime
 import os
 
-DB_PATH = 'data/users.db'
+DB_PATH = 'data/skill_progress.db'
 
 def init_auth_db():
     """Initialize authentication database"""
@@ -37,11 +36,11 @@ def register_user(username, password, email):
                  (username, hashed_pw, email))
         conn.commit()
         conn.close()
-        return True, " Registration successful! Please log in."
+        return True, "Registration successful! Please log in."
     except sqlite3.IntegrityError:
-        return False, " Username already exists. Please choose a different one."
+        return False, "Username already exists. Please choose a different one."
     except Exception as e:
-        return False, f" Error: {str(e)}"
+        return False, f"Error: {str(e)}"
 
 def authenticate_user(username, password):
     """Authenticate user credentials"""
