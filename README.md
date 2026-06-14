@@ -1,6 +1,6 @@
 # SkillGap AI Pro
 
-**2026 Market-Ready Employability Analyzer** — An end-to-end skill gap assessment platform powered by machine learning, featuring a 68K+ course engine with 34 providers across 25 tech roles.
+**2026 Market-Ready Employability Analyzer** -- An end-to-end skill gap assessment platform powered by machine learning, featuring a 68K+ course engine with 34 providers across 25 tech roles.
 
 ---
 
@@ -8,11 +8,12 @@
 
 ```mermaid
 graph TB
-    subgraph Frontend["Streamlit Frontend (frontend.py)"]
+    subgraph Frontend["React/TypeScript Frontend (frontend/)"]
         A1[Assessment Tab]
         A2[Market Insights Tab]
         A3[Learning Path Tab]
         AUTH[Login/Register]
+        UI[Custom UI Components<br/>UButton, UCard, UInput, ...]
     end
 
     subgraph Backend["Flask API Server (app.py)"]
@@ -43,8 +44,6 @@ graph TB
 
     Frontend -- HTTP POST --> B1
     Frontend -- HTTP GET --> B2 & B3 & B4 & B5 & B6
-    Frontend -- import --> AUTH
-    Frontend -- joblib.load --> Models
     Backend -- pandas.read_csv --> D2 & D3 & D4
     Backend -- joblib.load --> Models
     Backend -- course_db.py --> D6
@@ -57,13 +56,15 @@ graph TB
 ```mermaid
 sequenceDiagram
     actor User
-    participant UI as Streamlit UI
+    participant UI as React UI
     participant API as Flask API
     participant DB as SQLite DB
     participant ML as ML Models
 
     User->>UI: Login
-    UI->>UI: Authenticate (auth.py)
+    UI->>API: POST /api/login
+    API->>DB: Authenticate (auth.py)
+    API-->>UI: Session token
 
     User->>UI: Enter scores, select skills, upload resume
     User->>UI: Select target role (25 roles available)
@@ -75,7 +76,6 @@ sequenceDiagram
     API->>ML: Classify resume (Phase 4 AI)
     API-->>UI: Return readiness score + gap analysis
 
-    UI->>ML: predict_proba (local)
     UI-->>User: Display results
 
     User->>UI: View Market Insights tab
@@ -90,7 +90,7 @@ sequenceDiagram
 ## Features
 
 ### Assessment Engine
-- **5 skill sliders**: Logical Reasoning, Quantitative Aptitude, English & Communication, Programming Logic, Domain Knowledge (100–900 scale)
+- **5 skill sliders**: Logical Reasoning, Quantitative Aptitude, English & Communication, Programming Logic, Domain Knowledge (100-900 scale)
 - **25 target roles** across 5 domains (Software Development, Data, AI/ML, Cyber Security, DevOps)
 - **PDF resume upload** with keyword scoring (action verbs, quantified achievements, tech stack)
 - **ML-powered employability prediction** (Random Forest, 75%+ accuracy)
@@ -186,20 +186,31 @@ erDiagram
 
 ## Quick Start
 
-```bash
-# 1. Install dependencies
-pip install -r requirements.txt
+### Start the application
 
-# 2. Import course engine data
+```bash
+# 1. Import course engine data (one-time setup)
 python import_course_data.py
 
-# 3. Start Flask API server
+# 2. Start Flask server (serves both API + React frontend)
 python app.py
 
-# 4. In another terminal, start Streamlit frontend
-streamlit run frontend.py
+# 3. Open http://localhost:5000 in your browser
+```
 
-# 5. Open http://localhost:8501 in your browser
+### Start with batch files (Windows)
+
+Double-click `start_backend.bat` to launch the Flask server, then open `http://localhost:5000`.
+
+### Development mode (React hot-reload)
+
+```bash
+cd frontend
+npm install
+npm run dev        # Vite dev server on port 8501
+# In another terminal:
+python ../app.py   # Flask API on port 5000
+# Open http://localhost:8501 (Vite proxies /api to Flask)
 ```
 
 ### Training Models (optional)
@@ -230,7 +241,7 @@ python train_custom_ai.py
 
 ## Tech Stack
 
-- **Frontend**: Streamlit, PyPDF2, pandas
+- **Frontend**: React 19, TypeScript, Vite 6, Tailwind CSS v4
 - **Backend**: Flask, Flask-CORS
 - **ML**: scikit-learn, Sentence Transformers, joblib
 - **Data**: SQLite, pandas, numpy
@@ -239,19 +250,50 @@ python train_custom_ai.py
 ## Project Structure
 
 ```
-├── app.py                    # Flask API server
-├── frontend.py               # Streamlit UI
-├── auth.py                   # Authentication module
-├── course_db.py              # Course engine query layer
-├── import_course_data.py     # Course data import script
-├── train_model.py            # Employability model training
-├── train_risk_model.py       # Dropout risk model training
-├── train_custom_ai.py        # Resume classifier training
+├── app.py                        # Flask API server (serves API + React build)
+├── auth.py                       # Authentication module
+├── course_db.py                  # Course engine query layer
+├── import_course_data.py         # Course data import script
+├── train_model.py                # Employability model training
+├── train_risk_model.py           # Dropout risk model training
+├── train_custom_ai.py            # Resume classifier training
+├── start_backend.bat             # Windows batch: start Flask server
+├── start_frontend.bat            # Windows batch: start Vite dev server
+├── frontend/
+│   ├── index.html                # Entry HTML
+│   ├── vite.config.ts            # Vite config (port 8501, /api proxy)
+│   ├── package.json              # Dependencies
+│   ├── dist/                     # Production build (served by Flask)
+│   └── src/
+│       ├── main.tsx              # React entry point
+│       ├── App.tsx               # Main app with auth + tab routing
+│       ├── index.css             # Tailwind v4 + custom utilities + animations
+│       ├── types/index.ts        # TypeScript interfaces
+│       ├── api/client.ts         # API client (fetch wrapper)
+│       ├── context/
+│       │   ├── AuthContext.tsx    # Auth state management
+│       │   └── NotificationContext.tsx  # Toast notifications
+│       ├── hooks/
+│       │   ├── useAsync.ts       # Generic async state hook
+│       │   └── useForm.ts        # Form validation hook
+│       ├── components/
+│       │   ├── LoginPage.tsx     # Landing page + auth modal
+│       │   ├── Assessment.tsx    # Skill assessment tab
+│       │   ├── MarketInsights.tsx # Market data tab
+│       │   ├── LearningPath.tsx  # Course recommendations tab
+│       │   └── ui/              # 14 custom UI components
+│       │       ├── UButton.tsx, UCard.tsx, UInput.tsx, ...
+│       │       ├── UCheckbox.tsx, URadio.tsx, UToggle.tsx
+│       │       ├── ULoader.tsx, USkeleton.tsx, USelect.tsx
+│       │       ├── USlider.tsx, UBadge.tsx, UNotification.tsx
+│       │       ├── UProgressBar.tsx, UAccordion.tsx
+│       │       └── index.ts      # Barrel exports
+│       └── ...
 ├── data/
-│   ├── skill_progress.db     # Main database (users + course engine)
-│   ├── amcat_data.csv        # AMCAT employability dataset
-│   ├── job_benchmarks.csv    # Role skill benchmarks
-│   ├── course_content.csv    # Remedial course resources
+│   ├── skill_progress.db         # Main database (users + course engine)
+│   ├── amcat_data.csv            # AMCAT employability dataset
+│   ├── job_benchmarks.csv        # Role skill benchmarks
+│   ├── course_content.csv        # Remedial course resources
 │   └── students_dropout_academic_success.csv
 ├── models/
 │   ├── rf_employability_model.pkl
@@ -261,3 +303,35 @@ python train_custom_ai.py
 └── docs/
     └── presentation/
 ```
+
+## Deployment
+
+### Production (single process)
+
+```bash
+python app.py
+# Open http://localhost:5000 (Flask serves React build + all API routes)
+```
+
+### Colab Notebook
+
+`SkillGapAI_Colab_Deploy.ipynb` provides an 11-cell deployment workflow:
+1. Mount Google Drive
+2. Clone repository
+3. Install Python + Node.js dependencies
+4. Build React frontend
+5. Setup database (download from URL or upload manually)
+6. Start Flask backend (port 5000, serves both API + frontend)
+7. (Optional) ngrok tunnel for public access
+8. Test with sample data
+9. Stop all processes
+
+### Vite Dev Mode (hot-reload)
+
+Use `start_frontend.bat` or `npm run dev` from `frontend/` for development with hot module replacement. Vite proxies `/api` requests to Flask on port 5000.
+
+## Notes
+
+- `data/skill_progress.db` (140 MB) is excluded from git via `.gitignore`. For deployment, use Git LFS or download from a release artifact.
+- The correct Python interpreter is `C:\Users\bakke\AppData\Local\Programs\Python\Python311\python.exe` (has Flask + scikit-learn 1.3.2).
+- The default `python` on PATH is the hermes-agent venv and lacks Flask.
