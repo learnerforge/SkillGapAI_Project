@@ -11,7 +11,7 @@ print("Starting AI Training Sequence...")
 # 1. LOAD THE JSONL DATASET
 print("Loading resume dataset...")
 data = []
-with open('resumes_dataset (1).jsonl', 'r', encoding='utf-8') as f:
+with open('resumes_dataset.jsonl', 'r', encoding='utf-8') as f:
     for line in f:
         data.append(json.loads(line))
 
@@ -45,7 +45,7 @@ print(classification_report(y_test, y_pred))
 
 # 7. SAVE THE TRAINED AI
 print("Saving your custom AI model...")
-with open('custom_resume_classifier.pkl', 'wb') as f:
+with open('models/custom_resume_classifier.pkl', 'wb') as f:
     pickle.dump(clf, f)
 
-print("Training Complete! Saved as 'custom_resume_classifier.pkl'")
+print("Training Complete! Saved as 'models/custom_resume_classifier.pkl'")

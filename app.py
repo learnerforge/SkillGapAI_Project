@@ -50,7 +50,7 @@ nlp_model = None
 classifier_model = None
 try:
     nlp_model = SentenceTransformer('all-MiniLM-L6-v2')
-    with open('custom_resume_classifier.pkl', 'rb') as f:
+    with open('models/custom_resume_classifier.pkl', 'rb') as f:
         classifier_model = pickle.load(f)
     print("Phase 4 Custom AI Loaded Successfully!")
 except Exception as e:
@@ -267,6 +267,45 @@ def get_recommendations():
 def get_providers():
     providers = course_db.get_providers()
     return jsonify(providers)
+
+@app.route('/api/progress', methods=['GET'])
+def get_progress():
+    user_id = request.args.get('user_id', 'default')
+    status_filter = request.args.get('status')
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    if status_filter:
+        rows = conn.execute('SELECT * FROM skill_progress WHERE user_id = ? AND status = ? ORDER BY created_at DESC', (user_id, status_filter)).fetchall()
+    else:
+        rows = conn.execute('SELECT * FROM skill_progress WHERE user_id = ? ORDER BY created_at DESC', (user_id,)).fetchall()
+    conn.close()
+    return jsonify([dict(r) for r in rows])
+
+@app.route('/api/progress/update', methods=['POST'])
+def update_progress():
+    data = request.json
+    skill_name = data.get('skill_name')
+    target_role = data.get('target_role')
+    user_id = data.get('user_id', 'default')
+    new_status = data.get('status', 'completed')
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    if new_status == 'completed':
+        c.execute('UPDATE skill_progress SET status = ?, completed_at = ? WHERE user_id = ? AND skill_name = ? AND target_role = ?',
+                  ('completed', datetime.now(), user_id, skill_name, target_role))
+    else:
+        c.execute('UPDATE skill_progress SET status = ? WHERE user_id = ? AND skill_name = ? AND target_role = ?',
+                  (new_status, user_id, skill_name, target_role))
+    conn.commit()
+    conn.close()
+    return jsonify({"success": True})
+
+@app.route('/api/user/<username>', methods=['GET'])
+def get_user_profile(username):
+    user = auth.get_user_info(username)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    return jsonify({"id": user[0], "username": user[1], "email": user[2], "created_at": user[3], "last_login": user[4]})
 
 @app.route('/api/login', methods=['POST'])
 def api_login():

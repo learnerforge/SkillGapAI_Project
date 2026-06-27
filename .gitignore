@@ -11,7 +11,7 @@ __pycache__/
 *.so
 .Python
 
-# Models (large files - uncomment if needed)
+# Models (large files - tracked by git, required at runtime)
 # models/*.pkl
 # *.pkl
 
