@@ -104,6 +104,21 @@ def get_skills_for_role_by_name(role_name):
     required = [s.strip() for s in role['required_skills'].split(';') if s.strip()]
     return required, []
 
+def get_role_by_identifier(identifier):
+    """Look up a role by either role_id or role_name."""
+    conn = get_conn()
+    role = dict_fetch_one(conn, "SELECT role_id, role_name, required_skills, optional_skills FROM roles WHERE role_id = ? OR role_name = ? LIMIT 1", [identifier, identifier])
+    conn.close()
+    return role
+
+def get_skills_for_role_identifier(identifier):
+    """Get required/optional skills for a role given its id or name."""
+    role = get_role_by_identifier(identifier)
+    if not role or not role.get('required_skills'):
+        return [], []
+    required = [s.strip() for s in role['required_skills'].split(';') if s.strip()]
+    return required, []
+
 def get_skills_for_role(role_id):
     conn = get_conn()
     role = dict_fetch_one(conn, "SELECT required_skills, optional_skills FROM roles WHERE role_id = ?", [role_id])

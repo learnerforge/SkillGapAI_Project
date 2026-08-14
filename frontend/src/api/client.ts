@@ -1,8 +1,9 @@
 const BASE = '/api'
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
+  const isForm = options?.body instanceof FormData
   const res = await fetch(`${BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
+    headers: isForm ? {} : { 'Content-Type': 'application/json' },
     ...options,
   })
   if (!res.ok) {
@@ -106,6 +107,7 @@ export interface AnalyzeResult {
     resources?: { name: string; link: string; duration: string; provider: string }[]
   }[]
   ai_role?: string
+  ai_error?: string
 }
 
 export interface ProgressItem {
@@ -128,6 +130,15 @@ export interface UserProfile {
   email: string | null
   created_at: string
   last_login: string | null
+}
+
+export interface ResumeParseResult {
+  success: boolean
+  text?: string
+  page_count?: number
+  word_count?: number
+  code?: string
+  message?: string
 }
 
 export const api = {
@@ -193,4 +204,10 @@ export const api = {
     }),
 
   getUserProfile: (username: string) => request<UserProfile>(`/user/${encodeURIComponent(username)}`),
+
+  parseResume: (file: File) => {
+    const fd = new FormData()
+    fd.append('file', file)
+    return request<ResumeParseResult>('/resume/parse', { method: 'POST', body: fd })
+  },
 }

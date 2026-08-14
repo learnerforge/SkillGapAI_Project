@@ -6,13 +6,19 @@ import sqlite3
 from datetime import datetime
 import os
 import pickle
-from sentence_transformers import SentenceTransformer
+
+try:
+    from sentence_transformers import SentenceTransformer
+except ImportError:
+    SentenceTransformer = None
 
 import course_db
 import auth
+import resume_parser
 
 app = Flask(__name__)
 CORS(app)
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 DB_PATH = course_db.DB_PATH
 
@@ -22,8 +28,77 @@ def init_db():
     c = conn.cursor()
     c.execute('''CREATE TABLE IF NOT EXISTS skill_progress (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, skill_name TEXT, target_role TEXT, status TEXT DEFAULT 'pending', resource_link TEXT, resource_name TEXT, duration TEXT, gap_score REAL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, completed_at TIMESTAMP, UNIQUE(user_id, skill_name, target_role))''')
     c.execute('''CREATE TABLE IF NOT EXISTS user_profiles (user_id TEXT PRIMARY KEY, name TEXT, email TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+    # Course engine schema (populated by import_course_data.py when the full
+    # dataset is available; kept here so the API degrades to empty results
+    # instead of 500s when the DB has not been provisioned).
+    c.execute('''CREATE TABLE IF NOT EXISTS roles (
+        role_id TEXT PRIMARY KEY, role_name TEXT, required_skills TEXT,
+        optional_skills TEXT, domain TEXT, level TEXT, priority_score REAL,
+        market_demand_score REAL, average_learning_months REAL
+    )''')
+    c.execute('''CREATE TABLE IF NOT EXISTS providers (
+        provider_id TEXT PRIMARY KEY, provider_name TEXT, provider_type TEXT,
+        trust_score REAL, certificate_supported INTEGER
+    )''')
+    c.execute('''CREATE TABLE IF NOT EXISTS courses (
+        course_id TEXT PRIMARY KEY, title TEXT, url TEXT, provider_name TEXT,
+        difficulty TEXT, duration TEXT, price_type TEXT,
+        certificate_available INTEGER, credential_type TEXT,
+        data_quality_score REAL, language TEXT, category TEXT, provider_id TEXT
+    )''')
+    c.execute('''CREATE TABLE IF NOT EXISTS course_skills (
+        course_skill_id INTEGER PRIMARY KEY AUTOINCREMENT, course_id TEXT,
+        normalized_skill_name TEXT, skill_type TEXT, confidence_score REAL,
+        extraction_method TEXT
+    )''')
+    c.execute('''CREATE TABLE IF NOT EXISTS role_course_mappings (
+        mapping_id INTEGER PRIMARY KEY AUTOINCREMENT, role_id TEXT,
+        course_id TEXT, relevance_score REAL, required_or_optional TEXT
+    )''')
+    c.execute("CREATE INDEX IF NOT EXISTS idx_courses_id ON courses(course_id)")
+    c.execute("CREATE INDEX IF NOT EXISTS idx_courses_provider ON courses(provider_id)")
+    c.execute("CREATE INDEX IF NOT EXISTS idx_cs_course ON course_skills(course_id)")
+    c.execute("CREATE INDEX IF NOT EXISTS idx_cs_skill ON course_skills(normalized_skill_name)")
+    c.execute("CREATE INDEX IF NOT EXISTS idx_rcm_role ON role_course_mappings(role_id)")
+    c.execute("CREATE INDEX IF NOT EXISTS idx_rcm_course ON role_course_mappings(course_id)")
     conn.commit()
     conn.close()
+
+def seed_benchmark_roles():
+    """Seed the roles table from data/job_benchmarks.csv when the course DB
+    has not been provisioned (roles table empty), so the core role-based
+    assessment works out of the box."""
+    conn = sqlite3.connect(DB_PATH)
+    try:
+        count = conn.execute("SELECT COUNT(*) FROM roles").fetchone()[0]
+    except sqlite3.OperationalError:
+        conn.close()
+        return 0
+    if count > 0:
+        conn.close()
+        return 0
+    if not isinstance(benchmarks_df, pd.DataFrame) or benchmarks_df.empty:
+        conn.close()
+        return 0
+    def domain_for(role_id):
+        for prefix, domain in {"DA": "Data", "ML": "AI/ML", "AI": "AI/ML", "DE": "Data", "SWE": "Software"}.items():
+            if role_id.startswith(prefix):
+                return domain
+        return "General"
+
+    roles = {}
+    for _, row in benchmarks_df.iterrows():
+        rid = str(row['Role_ID']).strip()
+        roles.setdefault(rid, {"role_name": str(row['Role_Name']).strip(), "skills": []})
+        roles[rid]["skills"].append(str(row['Skill_Name']).strip())
+    for rid, info in roles.items():
+        conn.execute(
+            "INSERT OR IGNORE INTO roles (role_id, role_name, required_skills, optional_skills, domain, level) VALUES (?, ?, ?, '', ?, 'Mid')",
+            (rid, info["role_name"], ";".join(info["skills"]), domain_for(rid)),
+        )
+    conn.commit()
+    conn.close()
+    return len(roles)
 
 init_db()
 
@@ -38,6 +113,11 @@ try:
     print("CSV datasets loaded successfully!")
 except Exception as e:
     print(f"CSV Warning: {e}")
+
+seeded = seed_benchmark_roles()
+if seeded:
+    print(f"[OK] Seeded {seeded} roles from job_benchmarks.csv. Run import_course_data.py (with data/exports/*.csv) for the full 25-role / 68K-course engine.")
+
 try:
     rf_model = joblib.load('models/rf_employability_model.pkl')
     risk_model = joblib.load('models/dt_risk_model.pkl')
@@ -49,10 +129,11 @@ print("Loading Phase 4 Enterprise Deep Learning Engine...")
 nlp_model = None
 classifier_model = None
 try:
-    nlp_model = SentenceTransformer('all-MiniLM-L6-v2')
+    if SentenceTransformer is not None:
+        nlp_model = SentenceTransformer('all-MiniLM-L6-v2')
     with open('models/custom_resume_classifier.pkl', 'rb') as f:
         classifier_model = pickle.load(f)
-    print("Phase 4 Custom AI Loaded Successfully!")
+    print("Phase 4 Custom AI Loaded Successfully!" if nlp_model else "Phase 4 Custom AI loaded (NLP unavailable).")
 except Exception as e:
     print(f"Phase 4 AI Warning: {e}")
 
@@ -87,19 +168,56 @@ def get_content_for_skill(skill_name):
     if skill_name in SKILL_CONTENT_DB:
         info = SKILL_CONTENT_DB[skill_name]
         return [{"name": info["name"], "link": f"https://www.google.com/search?q=learn+{skill_name.replace(' ', '+')}+course", "duration": info["duration"], "provider": info["provider"]}]
-    resources = course_db.get_courses(skill=skill_name, limit=3)
+    resources = None
+    try:
+        resources = course_db.get_courses(skill=skill_name, limit=3)
+    except Exception:
+        resources = None
     if resources:
         return [{"name": r["title"], "link": r["url"] or f"https://www.google.com/search?q=learn+{skill_name.replace(' ', '+')}+course", "duration": r.get("duration") or "Varies", "provider": r.get("provider_name") or "Multiple"} for r in resources]
     return [{"name": f"Learn {skill_name}", "link": f"https://www.google.com/search?q=learn+{skill_name.replace(' ', '+')}+course+2026", "duration": "Varies", "provider": "Multiple"}]
 
+def _normalize_scores(student_scores):
+    """Normalize incoming score values to a 0-10 scale.
+
+    The UI sends 0-10 slider values, while the legacy AMCAT-style payloads use
+    a 0-100 (or 0-900) scale. Any value above 10 is assumed to be percentage-
+    based and divided by 100 so both payloads score consistently against the
+    0-10 benchmarks.
+    """
+    normalized = {}
+    for key, value in (student_scores or {}).items():
+        try:
+            val = float(value)
+        except (TypeError, ValueError):
+            continue
+        if val > 10:
+            val = val / 100.0
+        normalized[key] = val
+    return normalized
+
 def calculate_gap(student_scores, selected_skills, target_role, user_id="default"):
+    student_scores = _normalize_scores(student_scores)
+    target_role = (target_role or "").strip()
+    role_name = target_role
+
     if isinstance(benchmarks_df, pd.DataFrame) and not benchmarks_df.empty:
-        role_rules = benchmarks_df[benchmarks_df['Role_Name'].str.strip() == target_role.strip()]
+        role_rules = benchmarks_df[
+            (benchmarks_df['Role_ID'].str.strip() == target_role) |
+            (benchmarks_df['Role_Name'].str.strip() == target_role)
+        ]
         if not role_rules.empty:
-            return _calculate_gap_csv(role_rules, student_scores, selected_skills, target_role, user_id)
+            role_name = role_rules['Role_Name'].iloc[0].strip()
+            return _calculate_gap_csv(role_rules, student_scores, selected_skills, role_name, user_id)
+
     skills_required, _ = course_db.get_skills_for_role_by_name(target_role)
+    if not skills_required:
+        role = course_db.get_role_by_identifier(target_role)
+        if role:
+            role_name = role['role_name']
+            skills_required, _ = course_db.get_skills_for_role_identifier(target_role)
     if skills_required:
-        return _calculate_gap_db(target_role, skills_required, student_scores, selected_skills, user_id)
+        return _calculate_gap_db(role_name, skills_required, student_scores, selected_skills, user_id)
     return {"error": "Role not found.", "final_readiness_score": 0, "missing_skills": [], "remedial_roadmap": []}
 
 def _calculate_gap_csv(role_rules, student_scores, selected_skills, target_role, user_id):
@@ -192,6 +310,22 @@ def _calculate_gap_db(target_role, skills_required, student_scores, selected_ski
     final_score = round(readiness_score, 2)
     return {"target_role": target_role, "final_readiness_score": final_score, "is_job_ready": final_score >= 80, "missing_skills": missing_skills, "remedial_roadmap": recommended_links, "all_skills": all_skills_data}
 
+@app.route('/api/resume/parse', methods=['POST'])
+def parse_resume():
+    file = request.files.get('file')
+    try:
+        text, page_count = resume_parser.parse_resume_file(file)
+    except resume_parser.ResumeParseError as e:
+        return jsonify({"success": False, "code": e.code, "message": e.message})
+    except Exception:
+        return jsonify({"success": False, "code": resume_parser.PDF_ERROR_PARSE, "message": "Unexpected error while reading the PDF."})
+    return jsonify({
+        "success": True,
+        "text": text,
+        "page_count": page_count,
+        "word_count": len(text.split()),
+    })
+
 @app.route('/api/analyze', methods=['POST'])
 def analyze_student():
     data = request.json
@@ -203,13 +337,14 @@ def analyze_student():
     results = calculate_gap(student_scores, selected_skills, target_role, user_id)
 
     resume_text = data.get("resume_text", "")
-    if classifier_model and resume_text and len(resume_text.split()) > 10:
+    if classifier_model and nlp_model and resume_text and len(resume_text.split()) > 10:
         try:
             resume_vector = nlp_model.encode(resume_text, batch_size=1)
             predicted_role = classifier_model.predict([resume_vector])[0]
             results["ai_role"] = predicted_role
         except Exception as e:
-            pass
+            results["ai_role"] = None
+            results["ai_error"] = str(e)
 
     return jsonify(results)
 

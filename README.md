@@ -86,6 +86,7 @@ React + TypeScript (frontend/)
 | `/api/progress` | GET | User skill progress: `?user_id=X&status=pending` |
 | `/api/progress/update` | POST | Update skill status: `user_id`, `skill_name`, `target_role`, `status` |
 | `/api/user/<username>` | GET | User profile (username, email, created_at, last_login) |
+| `/api/resume/parse` | POST | Extract text from an uploaded PDF resume (multipart `file`). Returns `text`, `page_count`, `word_count`, or a `PDF_ERROR_*` code |
 | `/api/login` | POST | Authenticate: `username`, `password` → user info |
 | `/api/register` | POST | Register: `username`, `password`, `email` |
 

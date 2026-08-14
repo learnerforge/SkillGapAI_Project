@@ -3,12 +3,20 @@ import { api, type Role, type AnalyzeResult } from '../api/client'
 import Select from './Select'
 
 const SKILLS = [
-  { key: 'logical_reasoning', label: 'Logical Reasoning' },
-  { key: 'quantitative_aptitude', label: 'Quantitative Aptitude' },
-  { key: 'english_communication', label: 'English & Communication' },
-  { key: 'programming_logic', label: 'Programming Logic' },
-  { key: 'domain_knowledge', label: 'Domain Knowledge' },
+  { key: 'Logical', label: 'Logical Reasoning' },
+  { key: 'Quant', label: 'Quantitative Aptitude' },
+  { key: 'English', label: 'English & Communication' },
+  { key: 'ComputerProgramming', label: 'Programming Logic' },
+  { key: 'Domain', label: 'Domain Knowledge' },
 ]
+
+const RESUME_ERROR_MESSAGES: Record<string, string> = {
+  PDF_ERROR_PASSWORD: 'This PDF is password-protected. Remove the password and re-upload.',
+  PDF_ERROR_IMAGE: 'This PDF looks like a scanned/image file with no extractable text. Upload a text-based PDF or paste your resume below.',
+  PDF_ERROR_TYPE: 'Only PDF files are supported.',
+  PDF_ERROR_SIZE: 'File is too large (max 10 MB).',
+  PDF_ERROR_PARSE: 'Could not read this PDF. Try a different file.',
+}
 
 interface Props {
   defaultRoleId?: string
@@ -20,12 +28,18 @@ export default function Assessment({ defaultRoleId, username }: Props) {
   const [selectedRole, setSelectedRole] = useState(defaultRoleId || '')
   const [loadingRoles, setLoadingRoles] = useState(true)
   const [scores, setScores] = useState<Record<string, number>>(() =>
-    Object.fromEntries(SKILLS.map((s) => [s.key, 500]))
+    Object.fromEntries(SKILLS.map((s) => [s.key, 5]))
   )
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([])
+  const [availableSkills, setAvailableSkills] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<AnalyzeResult | null>(null)
   const [error, setError] = useState('')
   const [fileName, setFileName] = useState('')
+  const [resumeStatus, setResumeStatus] = useState<'idle' | 'parsing' | 'ready' | 'error'>('idle')
+  const [resumeText, setResumeText] = useState('')
+  const [resumeInfo, setResumeInfo] = useState('')
+  const [resumeError, setResumeError] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -35,13 +49,63 @@ export default function Assessment({ defaultRoleId, username }: Props) {
       .finally(() => setLoadingRoles(false))
   }, [])
 
+  useEffect(() => {
+    if (!selectedRole) {
+      setAvailableSkills([])
+      setSelectedSkills([])
+      return
+    }
+    api.getRole(selectedRole)
+      .then(r => setAvailableSkills([...r.required_skills_list, ...r.optional_skills_list]))
+      .catch(() => setAvailableSkills([]))
+  }, [selectedRole])
+
   const handleScoreChange = (key: string, value: number) => {
     setScores((prev) => ({ ...prev, [key]: value }))
   }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const toggleSkill = (skill: string) => {
+    setSelectedSkills(prev =>
+      prev.includes(skill) ? prev.filter(s => s !== skill) : [...prev, skill]
+    )
+  }
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    setFileName(file ? file.name : '')
+    e.target.value = ''
+    if (!file) return
+    setFileName(file.name)
+    setResumeStatus('parsing')
+    setResumeError('')
+    setResumeInfo('')
+    try {
+      const res = await api.parseResume(file)
+      if (res.success && res.text) {
+        setResumeText(res.text)
+        setResumeStatus('ready')
+        setResumeInfo(
+          `${res.page_count ?? 1} page${(res.page_count ?? 1) > 1 ? 's' : ''} · ${res.word_count ?? res.text.split(/\s+/).length} words`
+        )
+      } else {
+        setResumeStatus('error')
+        setResumeError(
+          (res.code && RESUME_ERROR_MESSAGES[res.code]) ||
+            res.message ||
+            'Could not parse this PDF.'
+        )
+      }
+    } catch {
+      setResumeStatus('error')
+      setResumeError('Upload failed. Is the backend running?')
+    }
+  }
+
+  const clearResume = () => {
+    setFileName('')
+    setResumeText('')
+    setResumeStatus('idle')
+    setResumeInfo('')
+    setResumeError('')
   }
 
   const handleAnalyze = async () => {
@@ -51,8 +115,10 @@ export default function Assessment({ defaultRoleId, username }: Props) {
     try {
       const res = await api.analyze({
         scores,
+        selected_skills: selectedSkills,
         target_role: selectedRole || undefined,
         user_id: username,
+        resume_text: resumeText || undefined,
       })
       setResult(res)
     } catch (err: unknown) {
@@ -85,9 +151,9 @@ export default function Assessment({ defaultRoleId, username }: Props) {
             </div>
             <input
               type="range"
-              min={100}
-              max={900}
-              step={10}
+              min={0}
+              max={10}
+              step={0.5}
               value={scores[skill.key]}
               onChange={(e) =>
                 handleScoreChange(skill.key, Number(e.target.value))
@@ -115,8 +181,31 @@ export default function Assessment({ defaultRoleId, username }: Props) {
         </div>
       </div>
 
-      {/* File Upload */}
-      <div className="card animate-slide-up stagger-4">
+      {/* Skills Already Have */}
+      {availableSkills.length > 0 && (
+        <div className="card animate-slide-up stagger-4">
+          <h3 className="card-title">Skills You Already Have</h3>
+          <p className="page-subtitle" style={{ marginBottom: 12 }}>
+            Select the skills you already possess to improve accuracy
+          </p>
+          <div className="skill-tags">
+            {availableSkills.map(s => (
+              <button
+                key={s}
+                type="button"
+                className={`skill-tag optional${selectedSkills.includes(s) ? ' selected' : ''}`}
+                onClick={() => toggleSkill(s)}
+              >
+                {s}
+                {selectedSkills.includes(s) ? ' ✓' : ''}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Resume Upload */}
+      <div className="card animate-slide-up stagger-5">
         <h3 className="card-title">Resume Upload</h3>
         <div
           className="file-upload"
@@ -136,6 +225,43 @@ export default function Assessment({ defaultRoleId, username }: Props) {
               Click to upload a PDF resume (optional)
             </span>
           )}
+        </div>
+
+        {resumeStatus === 'parsing' && (
+          <p className="resume-status parsing">
+            <span className="spinner" /> Parsing resume...
+          </p>
+        )}
+
+        {resumeStatus === 'ready' && (
+          <div className="resume-status ready">
+            <span>Resume parsed successfully ({resumeInfo}).</span>
+            <button type="button" className="btn btn-secondary btn-small" onClick={clearResume}>
+              Remove
+            </button>
+          </div>
+        )}
+
+        {resumeStatus === 'error' && (
+          <p className="error-text">{resumeError}</p>
+        )}
+
+        <div className="form-group" style={{ marginTop: 12 }}>
+          <label className="form-label">
+            Or paste your resume text{' '}
+            <span className="text-muted">(enables AI role detection)</span>
+          </label>
+          <textarea
+            className="form-textarea"
+            rows={6}
+            placeholder="Paste the text content of your resume here..."
+            value={resumeText}
+            onChange={(e) => {
+              setResumeText(e.target.value)
+              if (e.target.value && resumeStatus !== 'ready') setResumeStatus('ready')
+              if (!e.target.value) setResumeStatus('idle')
+            }}
+          />
         </div>
       </div>
 

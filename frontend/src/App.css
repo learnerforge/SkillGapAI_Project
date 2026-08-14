@@ -463,6 +463,49 @@ body {
   color: var(--text-muted);
 }
 
+.form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  outline: none;
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+  transition: var(--transition);
+}
+
+.form-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+}
+
+.form-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.resume-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.resume-status.parsing {
+  color: var(--text-muted);
+}
+
+.resume-status.ready {
+  color: var(--success);
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .form-select {
   cursor: pointer;
   appearance: none;
@@ -748,6 +791,16 @@ input[type='range']:focus::-webkit-slider-thumb {
 
 .skill-tag:hover {
   background: rgba(231, 76, 60, 0.12);
+}
+
+button.skill-tag {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.skill-tag.optional.selected {
+  border-color: rgba(20, 255, 236, 0.5);
+  background: rgba(20, 255, 236, 0.14);
 }
 
 /* ===== ERROR ===== */
