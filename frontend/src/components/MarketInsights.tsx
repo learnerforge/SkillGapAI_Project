@@ -41,7 +41,7 @@ export default function MarketInsights({ onNavigate }: Props) {
     <div className="page">
       <div className="page-header animate-fade-in">
         <h2 className="page-title">Market Insights</h2>
-        <p className="page-subtitle">Explore 25 tech roles across 5 domains</p>
+        <p className="page-subtitle">Explore tech roles across data, AI/ML, and software</p>
       </div>
 
       <input

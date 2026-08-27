@@ -118,13 +118,27 @@ seeded = seed_benchmark_roles()
 if seeded:
     print(f"[OK] Seeded {seeded} roles from job_benchmarks.csv. Run import_course_data.py (with data/exports/*.csv) for the full 25-role / 68K-course engine.")
 
+# Phase 2/3 ML models. Each model is loaded independently so a missing or
+# corrupt model never blocks startup.
+rf_model = None
+scaler_model = None
+risk_model = None
 try:
     rf_model = joblib.load('models/rf_employability_model.pkl')
-    risk_model = joblib.load('models/dt_risk_model.pkl')
-    print("ML models loaded successfully!")
 except Exception as e:
-    print(f"Model Warning: {e}")
+    print(f"Employability model warning: {e}")
+try:
+    scaler_model = joblib.load('models/scaler.pkl')
+except Exception as e:
+    print(f"Scaler warning: {e}")
+try:
+    risk_model = joblib.load('models/dt_risk_model.pkl')
+except Exception as e:
+    print(f"Risk model warning: {e}")
+if rf_model or risk_model:
+    print("ML models loaded successfully!" if rf_model else "ML models loaded (partial).")
 
+# Phase 4 resume classifier (SentenceTransformer embeddings + RandomForest).
 print("Loading Phase 4 Enterprise Deep Learning Engine...")
 nlp_model = None
 classifier_model = None
@@ -195,6 +209,52 @@ def _normalize_scores(student_scores):
             val = val / 100.0
         normalized[key] = val
     return normalized
+
+# Feature order the employability model was trained on (see train_model.py).
+EMPLOYABILITY_FEATURES = [
+    'Logical', 'Quant', 'English', 'ComputerProgramming', 'Domain',
+    'Total_Aptitude', 'Tech_Score', 'Logical_Quant_Avg',
+    'GPA_Normalized', 'Strong_Academics', 'Top_College',
+]
+
+def _employability_signals(student_scores):
+    """Predict high-salary employability from the 5 aptitude sliders.
+
+    Uses rf_employability_model.pkl + scaler.pkl when available. The model was
+    trained on the 0-100 AMCAT scale, so 0-10 slider values are scaled up by
+    10. Academic features default to a mid-tier profile. Returns None when the
+    models are not loaded or inference fails, so this never breaks analysis.
+    """
+    if rf_model is None or scaler_model is None:
+        return None
+    try:
+        scores = _normalize_scores(student_scores)
+        def score(*keys, default=0.0):
+            for k in keys:
+                if k in scores:
+                    return float(scores[k])
+            return default
+        logical = score('Logical')
+        quant = score('Quant')
+        english = score('English')
+        programming = score('ComputerProgramming')
+        domain = score('Domain')
+        features = [
+            logical * 10, quant * 10, english * 10, programming * 10, domain * 10,
+            (logical + quant + english) * 10,
+            (programming + domain) * 10,
+            ((logical + quant) / 2) * 10,
+            0.7, 0, 0,
+        ]
+        scaled = scaler_model.transform(pd.DataFrame([features], columns=EMPLOYABILITY_FEATURES))
+        proba = rf_model.predict_proba(scaled)[0]
+        best = int(proba.argmax())
+        return {
+            "employability_score": int(round(float(proba[best]) * 100)),
+            "employability_class": "High" if rf_model.classes_[best] == 1 else "Low",
+        }
+    except Exception:
+        return None
 
 def calculate_gap(student_scores, selected_skills, target_role, user_id="default"):
     student_scores = _normalize_scores(student_scores)
@@ -335,6 +395,10 @@ def analyze_student():
     user_id = data.get("user_id", "default")
 
     results = calculate_gap(student_scores, selected_skills, target_role, user_id)
+
+    employability = _employability_signals(student_scores)
+    if employability:
+        results.update(employability)
 
     resume_text = data.get("resume_text", "")
     if classifier_model and nlp_model and resume_text and len(resume_text.split()) > 10:

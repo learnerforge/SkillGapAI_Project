@@ -144,8 +144,10 @@ for _, row in importance_df.iterrows():
     print(f"  {row['Feature']}: {row['Importance']:.3f}")
 
 # 6. Save Model and Scaler
+# Always persist the RandomForest under its documented name so loading never
+# depends on sklearn's private gradient-boosting modules across versions.
 os.makedirs('models', exist_ok=True)
-joblib.dump(best_model, 'models/rf_employability_model.pkl')
+joblib.dump(rf_model, 'models/rf_employability_model.pkl')
 joblib.dump(scaler, 'models/scaler.pkl')
 print(f"\n[OK] Model saved: models/rf_employability_model.pkl")
 print(f"[OK] Scaler saved: models/scaler.pkl")

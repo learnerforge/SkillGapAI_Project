@@ -1,0 +1,35 @@
+provider_id,provider_name,provider_type,trust_score,certificate_supported
+P01,Coursera,MOOC,95.0,1
+P02,Udemy,Marketplace,88.0,1
+P03,edX,MOOC,92.0,1
+P04,DataCamp,Intensive,90.0,1
+P05,Google Cloud Skills Boost,Corporate,93.0,1
+P06,AWS Training & Certification,Corporate,93.0,1
+P07,Microsoft Learn,Corporate,96.0,1
+P08,IBM SkillsBuild,Corporate,87.0,1
+P09,NPTEL,University,91.0,1
+P10,MIT OpenCourseWare,University,94.0,0
+P11,Stanford Online,University,95.0,1
+P12,freeCodeCamp,Community,98.0,0
+P13,Hugging Face,Community,96.0,0
+P14,Kaggle Learn,Community,93.0,0
+P15,Databricks Academy,Corporate,90.0,1
+P16,DeepLearning.AI,Corporate,97.0,1
+P17,TensorFlow,Corporate,94.0,0
+P18,OpenCV University,University,85.0,1
+P19,Oracle University,Corporate,84.0,1
+P20,Cisco Networking Academy,University,88.0,1
+P21,Linux Foundation Training,Corporate,88.0,1
+P22,Pluralsight,Marketplace,86.0,0
+P23,LinkedIn Learning,Marketplace,85.0,1
+P24,O'Reilly,Marketplace,84.0,0
+P25,Codecademy,Community,82.0,0
+P26,W3Schools,Community,76.0,0
+P27,GeeksforGeeks,Community,81.0,0
+P28,LeetCode,Community,80.0,0
+P29,HackerRank,Community,84.0,0
+P30,Udacity,MOOC,87.0,1
+P31,MongoDB University,Corporate,88.0,0
+P32,Redis University,Corporate,85.0,0
+P33,Tableau Learning,Corporate,88.0,1
+P34,Power BI Training,Corporate,89.0,1

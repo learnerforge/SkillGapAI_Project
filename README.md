@@ -1,14 +1,19 @@
 # SkillGap AI Pro
 
-**2026 Market-Ready Employability Analyzer** -- Assess skill gaps across 25 tech roles using ML, with a 68K+ course engine spanning 34 providers.
+**2026 Market-Ready Employability Analyzer** -- Assess skill gaps across tech roles using ML, with a course engine spanning 34 providers.
 
 ---
 
 ## Quick Start
 
 ```bash
-# One-time setup: import course engine data
-python import_course_data.py
+# One-time setup: build + import the course engine
+python build_course_exports.py   # generates data/exports/*.csv (deterministic)
+python import_course_data.py     # loads them into SQLite
+
+# Optional: retrain ML models with the exact installed scikit-learn
+python train_model.py
+python train_risk_model.py
 
 # Start the server (serves API + React frontend on one port)
 python app.py
@@ -37,7 +42,7 @@ Double-click `start_backend.bat`, then open `http://localhost:5000`.
 React + TypeScript (frontend/)
     │
     ├── POST /api/analyze          → ML gap analysis + score
-    ├── GET  /api/roles            → 25 tech roles across 5 domains
+    ├── GET  /api/roles            → Curated tech roles (6 benchmark roles)
     ├── GET  /api/courses          → 68K course catalog search
     ├── GET  /api/recommendations  → Role-specific course picks
     ├── GET  /api/skills           → Skill search
@@ -95,7 +100,7 @@ React + TypeScript (frontend/)
 - **Frontend**: React 19, TypeScript, Vite 6 (plain CSS, no framework)
 - **Backend**: Flask, Flask-CORS
 - **ML**: scikit-learn, Sentence Transformers, joblib
-- **Data**: SQLite, pandas, course engine (68K courses, 156K role-course mappings)
+- **Data**: SQLite, pandas, course engine (34 providers, 106 curated courses, 108 role-course mappings)
 - **Auth**: SQLite + SHA-256 hashing
 
 ## ML Models
@@ -109,13 +114,19 @@ React + TypeScript (frontend/)
 
 ## Course Engine
 
+The engine is built deterministically from the data shipped in this repo by
+`build_course_exports.py` (provider list + `course_content.csv` + the
+`job_benchmarks.csv` role skills), then loaded by `import_course_data.py`.
+Register a new role by adding rows to `data/job_benchmarks.csv` and re-running
+both scripts.
+
 | Table | Rows | Description |
 |-------|------|-------------|
 | `providers` | 34 | NPTEL, Microsoft Learn, MIT OCW, freeCodeCamp, etc. |
-| `courses` | 68,641 | Multi-provider, multi-language catalog |
-| `course_skills` | 164,260 | Auto-extracted skill tags |
-| `roles` | 25 | Structured roles with required/optional skills |
-| `role_course_mappings` | 156,755 | Scored course-to-role relevance |
+| `courses` | 106 | Multi-provider, multi-language catalog (verified links preserved) |
+| `course_skills` | 108 | Auto-extracted skill tags |
+| `roles` | 6 | Structured roles from `job_benchmarks.csv` |
+| `role_course_mappings` | 108 | Scored course-to-role relevance |
 
 ## Project Structure
 
@@ -123,7 +134,8 @@ React + TypeScript (frontend/)
 app.py                          # Flask API + serves React build
 auth.py                         # Authentication (SQLite + SHA-256)
 course_db.py                    # Course engine query layer
-import_course_data.py           # One-time course data import
+import_course_data.py           # Load data/exports/*.csv into SQLite
+build_course_exports.py         # Generate the course-engine export CSVs
 train_model.py                  # Employability model training
 train_risk_model.py             # Risk model training
 train_custom_ai.py              # Resume classifier training
@@ -151,7 +163,8 @@ frontend/
       Select.tsx                # Custom dropdown (replaces native <select>)
 
 data/
-  skill_progress.db             # Main database (users + course engine, ~140MB)
+  skill_progress.db             # Main database (users + course engine)
+  exports/                      # Course-engine CSVs (built by build_course_exports.py)
   amcat_data.csv                # Employability dataset
   job_benchmarks.csv            # Role skill benchmarks
   course_content.csv            # Remedial course resources
@@ -165,8 +178,11 @@ models/
 
 ## Notes
 
-- `data/skill_progress.db` (140 MB) is excluded from `.gitignore`. Use Git LFS or a release artifact for deployment.
-- Correct Python path: `C:\Users\bakke\AppData\Local\Programs\Python\Python311\python.exe` (has Flask + scikit-learn). The default `python` on PATH is a different venv.
-- Flask serves both the API and the built React frontend on port 5000 in production. In dev mode, Vite (8501) proxies `/api` to Flask (5000).
+- The ML models are scikit-learn pickles. If the installed scikit-learn version
+  ever differs from the one used to train them, re-run `train_model.py`,
+  `train_risk_model.py`, and `train_custom_ai.py` (in the same Python
+  environment that runs `app.py`) so the pickles unpickle cleanly.
+- Flask serves both the API and the built React frontend on port 5000 in
+  production. In dev mode, Vite (8501) proxies `/api` to Flask (5000).
 - Build frontend: `cd frontend && npm run build` — outputs to `frontend/dist/`.
 - Colab notebook: `SkillGapAI_Colab_Deploy.ipynb` — 11-cell workflow for Google Colab deployment.

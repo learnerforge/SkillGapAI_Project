@@ -1,0 +1,7 @@
+role_id,role_name,required_skills,optional_skills,domain,level,priority_score,market_demand_score,average_learning_months
+AI01,AI Engineer,Advanced Python Programming;Deep Learning (TensorFlow/PyTorch);Natural Language Processing;Computer Vision;Large Language Models & RAG;System Design & Architecture,,AI/ML,Senior,98.0,96.0,12.0
+DA01,Data Analyst (Entry),SQL & Database Management;Excel & Spreadsheets;Data Visualization (Tableau/PowerBI);Python for Analytics;Logical Reasoning;Quantitative Analysis,,Data,Entry,90.0,92.0,4.0
+DA02,Data Analyst (Senior),Advanced SQL & ETL;Python/R for Statistics;Business Intelligence Tools;Statistical Modeling;Data Wrangling & Cleaning;Presentation & Communication,,Data,Senior,88.0,95.0,8.0
+DE01,Data Engineer,SQL & Database Systems;Python & Spark;Cloud Platforms (AWS/GCP/Azure);Data Pipeline & ETL Tools;Big Data Technologies;Containerization & DevOps,,Data,Mid,92.0,90.0,7.0
+ML01,Machine Learning Engineer,Python & Data Structures;Machine Learning Algorithms;Deep Learning Frameworks;Feature Engineering;MLOps & Model Deployment;Statistics & Linear Algebra,,AI/ML,Mid,95.0,94.0,10.0
+SWE01,Software Engineer (General),Data Structures & Algorithms;Problem Solving & Logic;Version Control & Git;Object-Oriented Programming;System Design Basics;Communication Skills,,Software,Entry,85.0,88.0,6.0

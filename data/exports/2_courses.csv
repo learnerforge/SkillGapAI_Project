@@ -1,0 +1,107 @@
+course_id,title,url,provider_name,difficulty,duration,price_type,certificate_available,credential_type,data_quality_score,language,category,provider_id
+DB001,SQL for Data Analysis,https://www.udemy.com,Udemy,beginner,12 hours,paid,1,Certificate,0.85,en,Curated,P02
+DB002,Advanced SQL & Database,https://www.coursera.org,Coursera,intermediate,20 hours,paid,1,Certificate,0.85,en,Curated,P01
+DB003,SQL for Data Engineering,https://www.datacamp.com,DataCamp,advanced,16 hours,paid,1,Certificate,0.85,en,Curated,P04
+DB004,Excel Skills for Business,https://www.coursera.org,Coursera,beginner,20 hours,paid,1,Certificate,0.85,en,Curated,P01
+DB005,Data Visualization Mastery,https://www.tableau.com/learn,Tableau Learning,beginner,8 hours,paid,1,Certificate,0.85,en,Curated,P33
+DB006,PowerBI for Business,https://learn.microsoft.com,Microsoft Learn,intermediate,12 hours,paid,1,Certificate,0.85,en,Curated,P07
+DB007,Python for Everybody,https://www.coursera.org,Coursera,beginner,25 hours,paid,1,Certificate,0.85,en,Curated,P01
+DB008,Python & R for Data Science,https://www.datacamp.com,DataCamp,intermediate,30 hours,paid,1,Certificate,0.85,en,Curated,P04
+DB009,Data Wrangling with Pandas,https://www.datacamp.com,DataCamp,intermediate,6 hours,paid,1,Certificate,0.85,en,Curated,P04
+DB010,Logical Reasoning Fundamentals,https://www.coursera.org,Coursera,beginner,6 hours,paid,1,Certificate,0.85,en,Curated,P01
+DB011,Machine Learning by Stanford,https://www.coursera.org,Coursera,intermediate,55 hours,paid,1,Certificate,0.85,en,Curated,P01
+DB012,Deep Learning Specialization,https://www.coursera.org,Coursera,advanced,3 months,paid,1,Certificate,0.85,en,Curated,P01
+DB013,NLP Fundamentals,https://huggingface.co/learn,Hugging Face,intermediate,15 hours,free,0,,0.85,en,Curated,P13
+DB014,Computer Vision Bootcamp,https://opencv.org/university,OpenCV University,advanced,18 hours,paid,1,Certificate,0.85,en,Curated,P18
+CC001,SQL for Data Analysis,https://www.udemy.com/course/sql-for-data-analysis,Udemy,intermediate,4 Hrs,paid,1,Certificate,1.0,en,Curated,P02
+CC002,Excel Skills for Business,https://www.coursera.org/specializations/excel-skills-for-business,Coursera,intermediate,3 Hrs,paid,1,Certificate,1.0,en,Curated,P01
+CC003,PowerBI Complete Roadmap,https://www.udemy.com/course/microsoft-power-bi-desktop-for-business-intelligence,Udemy,intermediate,5 Hrs,paid,1,Certificate,1.0,en,Curated,P02
+CC004,Data Visualization with Tableau,https://www.coursera.org/learn/data-visualization-tableau,Coursera,intermediate,4 Hrs,paid,1,Certificate,1.0,en,Curated,P01
+CC005,Python for Everybody,https://www.coursera.org/specializations/python,Coursera,intermediate,6 Hrs,paid,1,Certificate,1.0,en,Curated,P01
+CC006,Data Wrangling with Pandas,https://www.datacamp.com/courses/data-wrangling-with-pandas,DataCamp,intermediate,3 Hrs,paid,1,Certificate,1.0,en,Curated,P04
+CC007,Machine Learning by Stanford (Andrew Ng),https://www.coursera.org/learn/machine-learning,Coursera,intermediate,12 Hrs,paid,1,Certificate,1.0,en,Curated,P01
+CC008,Deep Learning Specialization,https://www.coursera.org/specializations/deep-learning,Coursera,advanced,15 Hrs,paid,1,Certificate,1.0,en,Curated,P01
+CC009,TensorFlow Developer Certificate,https://www.tensorflow.org/learn,TensorFlow,intermediate,10 Hrs,free,0,,1.0,en,Curated,P17
+CC010,Computer Vision & NLP Bootcamp,https://www.udemy.com/course/computer-vision-python,Udemy,intermediate,8 Hrs,paid,1,Certificate,1.0,en,Curated,P02
+CC011,NLP with Transformers (Hugging Face),https://huggingface.co/learn/nlp-course,Hugging Face,intermediate,6 Hrs,free,0,,1.0,en,Curated,P13
+CC012,AWS/GCP Cloud Fundamentals,https://aws.amazon.com/certification/certified-solutions-architect-associate,AWS Training & Certification,intermediate,8 Hrs,paid,1,Certificate,1.0,en,Curated,P06
+CC013,Cloud Data Engineering,https://cloud.google.com/certification/data-engineer,Google Cloud Skills Boost,intermediate,10 Hrs,paid,1,Certificate,1.0,en,Curated,P05
+CC014,Apache Spark for Data Engineering,https://www.databricks.com/learn,Databricks Academy,intermediate,6 Hrs,paid,1,Certificate,1.0,en,Curated,P15
+CC015,Building RAG Applications with LLMs,https://www.deeplearning.ai/courses/building-and-evaluating-rag-systems/,DeepLearning.AI,intermediate,4 Hrs,paid,1,Certificate,1.0,en,Curated,P16
+CC016,MLOps Specialization,https://www.coursera.org/specializations/mlops-machine-learning-duke,Coursera,intermediate,8 Hrs,paid,1,Certificate,1.0,en,Curated,P01
+CC017,Git & GitHub Bootcamp,https://www.udemy.com/course/git-and-github-bootcamp,Udemy,intermediate,3 Hrs,paid,1,Certificate,1.0,en,Curated,P02
+CC018,Docker & Kubernetes,https://www.udemy.com/course/docker-and-kubernetes,Udemy,intermediate,5 Hrs,paid,1,Certificate,1.0,en,Curated,P02
+CC019,System Design Interview Guide,https://www.tryexponent.com/courses/system-design,Udemy,intermediate,4 Hrs,paid,1,Certificate,1.0,en,Curated,P02
+CC020,Algorithms & Data Structures,https://www.coursera.org/learn/algorithms-part1,Coursera,intermediate,8 Hrs,paid,1,Certificate,1.0,en,Curated,P01
+CC021,Logical Reasoning Fundamentals,https://youtu.be/xPND7s0O3_0,Kaggle Learn,intermediate,2 Hrs,free,0,,1.0,en,Curated,P14
+CC022,Quantitative Aptitude Mastery,https://www.udemy.com/course/complete-gmat-quant,Udemy,intermediate,3 Hrs,paid,1,Certificate,1.0,en,Curated,P02
+CC023,Computer Science Fundamentals,https://www.udemy.com/course/computer-science-fundamentals-rgpv,Udemy,intermediate,5 Hrs,paid,1,Certificate,1.0,en,Curated,P02
+SK0001,SQL & Database Management on DataCamp,https://www.datacamp.com,DataCamp,beginner,12 hours,paid,1,Certificate,0.7,en,Curated,P04
+SK0002,SQL & Database Management on Coursera,https://www.coursera.org,Coursera,intermediate,20 hours,paid,1,Certificate,0.7,en,Curated,P01
+SK0003,Excel & Spreadsheets on Coursera,https://www.coursera.org,Coursera,beginner,20 hours,paid,1,Certificate,0.7,en,Curated,P01
+SK0004,Excel & Spreadsheets on Microsoft Learn,https://learn.microsoft.com,Microsoft Learn,beginner,8 hours,paid,1,Certificate,0.7,en,Curated,P07
+SK0005,Data Visualization (Tableau/PowerBI) on Tableau Learning,https://www.tableau.com/learn,Tableau Learning,intermediate,10 hours,paid,1,Certificate,0.7,en,Curated,P33
+SK0006,Data Visualization (Tableau/PowerBI) on Power BI Training,https://learn.microsoft.com/en-us/training/powerplatform,Power BI Training,intermediate,12 hours,paid,1,Certificate,0.7,en,Curated,P34
+SK0007,Python for Analytics on Coursera,https://www.coursera.org,Coursera,beginner,25 hours,paid,1,Certificate,0.7,en,Curated,P01
+SK0008,Python for Analytics on Kaggle Learn,https://www.kaggle.com/learn,Kaggle Learn,beginner,6 hours,free,0,,0.7,en,Curated,P14
+SK0009,Logical Reasoning on Kaggle Learn,https://www.kaggle.com/learn,Kaggle Learn,beginner,6 hours,free,0,,0.7,en,Curated,P14
+SK0010,Logical Reasoning on edX,https://www.edx.org,edX,beginner,8 hours,paid,1,Certificate,0.7,en,Curated,P03
+SK0011,Quantitative Analysis on Udemy,https://www.udemy.com,Udemy,intermediate,10 hours,paid,1,Certificate,0.7,en,Curated,P02
+SK0012,Quantitative Analysis on GeeksforGeeks,https://www.geeksforgeeks.org,GeeksforGeeks,intermediate,8 hours,free,0,,0.7,en,Curated,P27
+SK0013,Advanced SQL & ETL on DataCamp,https://www.datacamp.com,DataCamp,advanced,16 hours,paid,1,Certificate,0.7,en,Curated,P04
+SK0014,Advanced SQL & ETL on Databricks Academy,https://www.databricks.com/learn,Databricks Academy,advanced,14 hours,paid,1,Certificate,0.7,en,Curated,P15
+SK0015,Python/R for Statistics on DataCamp,https://www.datacamp.com,DataCamp,intermediate,30 hours,paid,1,Certificate,0.7,en,Curated,P04
+SK0016,Python/R for Statistics on Coursera,https://www.coursera.org,Coursera,intermediate,28 hours,paid,1,Certificate,0.7,en,Curated,P01
+SK0017,Business Intelligence Tools on Power BI Training,https://learn.microsoft.com/en-us/training/powerplatform,Power BI Training,intermediate,12 hours,paid,1,Certificate,0.7,en,Curated,P34
+SK0018,Business Intelligence Tools on Tableau Learning,https://www.tableau.com/learn,Tableau Learning,intermediate,10 hours,paid,1,Certificate,0.7,en,Curated,P33
+SK0019,Statistical Modeling on Kaggle Learn,https://www.kaggle.com/learn,Kaggle Learn,intermediate,10 hours,free,0,,0.7,en,Curated,P14
+SK0020,Statistical Modeling on DataCamp,https://www.datacamp.com,DataCamp,intermediate,8 hours,paid,1,Certificate,0.7,en,Curated,P04
+SK0021,Data Wrangling & Cleaning on DataCamp,https://www.datacamp.com,DataCamp,intermediate,6 hours,paid,1,Certificate,0.7,en,Curated,P04
+SK0022,Data Wrangling & Cleaning on Kaggle Learn,https://www.kaggle.com/learn,Kaggle Learn,intermediate,5 hours,free,0,,0.7,en,Curated,P14
+SK0023,Presentation & Communication on Pluralsight,https://www.pluralsight.com,Pluralsight,beginner,5 hours,free,0,,0.7,en,Curated,P22
+SK0024,Presentation & Communication on LinkedIn Learning,https://www.linkedin.com/learning,LinkedIn Learning,beginner,4 hours,paid,1,Certificate,0.7,en,Curated,P23
+SK0025,Python & Data Structures on DataCamp,https://www.datacamp.com,DataCamp,intermediate,18 hours,paid,1,Certificate,0.7,en,Curated,P04
+SK0026,Python & Data Structures on GeeksforGeeks,https://www.geeksforgeeks.org,GeeksforGeeks,intermediate,12 hours,free,0,,0.7,en,Curated,P27
+SK0027,Machine Learning Algorithms on Coursera,https://www.coursera.org,Coursera,intermediate,55 hours,paid,1,Certificate,0.7,en,Curated,P01
+SK0028,Machine Learning Algorithms on Kaggle Learn,https://www.kaggle.com/learn,Kaggle Learn,intermediate,15 hours,free,0,,0.7,en,Curated,P14
+SK0029,Deep Learning Frameworks on DeepLearning.AI,https://www.deeplearning.ai/courses,DeepLearning.AI,advanced,3 months,paid,1,Certificate,0.7,en,Curated,P16
+SK0030,Deep Learning Frameworks on TensorFlow,https://www.tensorflow.org/learn,TensorFlow,advanced,20 hours,free,0,,0.7,en,Curated,P17
+SK0031,Feature Engineering on Kaggle Learn,https://www.kaggle.com/learn,Kaggle Learn,intermediate,6 hours,free,0,,0.7,en,Curated,P14
+SK0032,Feature Engineering on DataCamp,https://www.datacamp.com,DataCamp,intermediate,5 hours,paid,1,Certificate,0.7,en,Curated,P04
+SK0033,MLOps & Model Deployment on Coursera,https://www.coursera.org,Coursera,advanced,30 hours,paid,1,Certificate,0.7,en,Curated,P01
+SK0034,MLOps & Model Deployment on DeepLearning.AI,https://www.deeplearning.ai/courses,DeepLearning.AI,advanced,12 hours,paid,1,Certificate,0.7,en,Curated,P16
+SK0035,Statistics & Linear Algebra on MIT OpenCourseWare,https://ocw.mit.edu,MIT OpenCourseWare,intermediate,20 hours,free,0,,0.7,en,Curated,P10
+SK0036,Statistics & Linear Algebra on Stanford Online,https://online.stanford.edu,Stanford Online,intermediate,18 hours,paid,1,Certificate,0.7,en,Curated,P11
+SK0037,Advanced Python Programming on Microsoft Learn,https://learn.microsoft.com,Microsoft Learn,advanced,20 hours,paid,1,Certificate,0.7,en,Curated,P07
+SK0038,Advanced Python Programming on Codecademy,https://www.codecademy.com,Codecademy,intermediate,12 hours,free,0,,0.7,en,Curated,P25
+SK0039,Deep Learning (TensorFlow/PyTorch) on TensorFlow,https://www.tensorflow.org/learn,TensorFlow,advanced,15 hours,free,0,,0.7,en,Curated,P17
+SK0040,Deep Learning (TensorFlow/PyTorch) on OpenCV University,https://opencv.org/university,OpenCV University,advanced,18 hours,paid,1,Certificate,0.7,en,Curated,P18
+SK0041,Natural Language Processing on Hugging Face,https://huggingface.co/learn,Hugging Face,intermediate,15 hours,free,0,,0.7,en,Curated,P13
+SK0042,Natural Language Processing on DeepLearning.AI,https://www.deeplearning.ai/courses,DeepLearning.AI,intermediate,8 hours,paid,1,Certificate,0.7,en,Curated,P16
+SK0043,Computer Vision on OpenCV University,https://opencv.org/university,OpenCV University,advanced,18 hours,paid,1,Certificate,0.7,en,Curated,P18
+SK0044,Computer Vision on TensorFlow,https://www.tensorflow.org/learn,TensorFlow,advanced,14 hours,free,0,,0.7,en,Curated,P17
+SK0045,Large Language Models & RAG on DeepLearning.AI,https://www.deeplearning.ai/courses,DeepLearning.AI,advanced,10 hours,paid,1,Certificate,0.7,en,Curated,P16
+SK0046,Large Language Models & RAG on Hugging Face,https://huggingface.co/learn,Hugging Face,advanced,8 hours,free,0,,0.7,en,Curated,P13
+SK0047,System Design & Architecture on NPTEL,https://nptel.ac.in,NPTEL,advanced,24 hours,paid,1,Certificate,0.7,en,Curated,P09
+SK0048,System Design & Architecture on LeetCode,https://leetcode.com,LeetCode,advanced,20 hours,free,0,,0.7,en,Curated,P28
+SK0049,Cloud Platforms (AWS/GCP/Azure) on Google Cloud Skills Boost,https://www.cloudskillsboost.google,Google Cloud Skills Boost,intermediate,16 hours,paid,1,Certificate,0.7,en,Curated,P05
+SK0050,Cloud Platforms (AWS/GCP/Azure) on AWS Training & Certification,https://aws.amazon.com/training,AWS Training & Certification,intermediate,16 hours,paid,1,Certificate,0.7,en,Curated,P06
+SK0051,Cloud Platforms (AWS/GCP/Azure) on Microsoft Learn,https://learn.microsoft.com,Microsoft Learn,beginner,10 hours,paid,1,Certificate,0.7,en,Curated,P07
+SK0052,Data Pipeline & ETL Tools on Databricks Academy,https://www.databricks.com/learn,Databricks Academy,intermediate,14 hours,paid,1,Certificate,0.7,en,Curated,P15
+SK0053,Data Pipeline & ETL Tools on DataCamp,https://www.datacamp.com,DataCamp,intermediate,10 hours,paid,1,Certificate,0.7,en,Curated,P04
+SK0054,Big Data Technologies on Databricks Academy,https://www.databricks.com/learn,Databricks Academy,advanced,20 hours,paid,1,Certificate,0.7,en,Curated,P15
+SK0055,Big Data Technologies on Microsoft Learn,https://learn.microsoft.com,Microsoft Learn,intermediate,16 hours,paid,1,Certificate,0.7,en,Curated,P07
+SK0056,Containerization & DevOps on Linux Foundation Training,https://training.linuxfoundation.org,Linux Foundation Training,intermediate,12 hours,paid,1,Certificate,0.7,en,Curated,P21
+SK0057,Containerization & DevOps on Udemy,https://www.udemy.com,Udemy,intermediate,10 hours,paid,1,Certificate,0.7,en,Curated,P02
+SK0058,Data Structures & Algorithms on Coursera,https://www.coursera.org,Coursera,intermediate,40 hours,paid,1,Certificate,0.7,en,Curated,P01
+SK0059,Data Structures & Algorithms on LeetCode,https://leetcode.com,LeetCode,intermediate,30 hours,free,0,,0.7,en,Curated,P28
+SK0060,Problem Solving & Logic on HackerRank,https://www.hackerrank.com,HackerRank,intermediate,15 hours,free,0,,0.7,en,Curated,P29
+SK0061,Problem Solving & Logic on LeetCode,https://leetcode.com,LeetCode,intermediate,12 hours,free,0,,0.7,en,Curated,P28
+SK0062,Version Control & Git on freeCodeCamp,https://www.freecodecamp.org/learn,freeCodeCamp,beginner,6 hours,free,0,,0.7,en,Curated,P12
+SK0063,Version Control & Git on Udemy,https://www.udemy.com,Udemy,beginner,8 hours,paid,1,Certificate,0.7,en,Curated,P02
+SK0064,Object-Oriented Programming on freeCodeCamp,https://www.freecodecamp.org/learn,freeCodeCamp,beginner,10 hours,free,0,,0.7,en,Curated,P12
+SK0065,Object-Oriented Programming on Coursera,https://www.coursera.org,Coursera,beginner,15 hours,paid,1,Certificate,0.7,en,Curated,P01
+SK0066,System Design Basics on edX,https://www.edx.org,edX,intermediate,12 hours,paid,1,Certificate,0.7,en,Curated,P03
+SK0067,System Design Basics on Udemy,https://www.udemy.com,Udemy,intermediate,9 hours,paid,1,Certificate,0.7,en,Curated,P02
+SK0068,Communication Skills on LinkedIn Learning,https://www.linkedin.com/learning,LinkedIn Learning,beginner,5 hours,paid,1,Certificate,0.7,en,Curated,P23
+SK0069,Communication Skills on Pluralsight,https://www.pluralsight.com,Pluralsight,beginner,4 hours,free,0,,0.7,en,Curated,P22

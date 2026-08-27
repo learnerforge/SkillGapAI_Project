@@ -111,7 +111,7 @@ export default function LearningPath() {
     <div className="page">
       <div className="page-header animate-fade-in">
         <h2 className="page-title">Learning Path</h2>
-        <p className="page-subtitle">Discover courses from 68K+ catalog across 34 providers</p>
+        <p className="page-subtitle">Discover curated courses across 34 providers</p>
       </div>
 
       <div className="card animate-slide-up stagger-1">

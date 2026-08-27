@@ -61,7 +61,7 @@ export default function Dashboard({ username, onNavigate }: Props) {
             <button className="action-card" onClick={() => onNavigate('market')}>
               <div className="action-icon">&#9733;</div>
               <div className="action-title">Market Insights</div>
-              <div className="action-desc">Browse 25 tech roles and providers</div>
+              <div className="action-desc">Browse tech roles and course providers</div>
             </button>
             <button className="action-card" onClick={() => onNavigate('courses')}>
               <div className="action-icon">&#9998;</div>

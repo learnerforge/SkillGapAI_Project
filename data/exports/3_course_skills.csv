@@ -1,0 +1,109 @@
+course_id,normalized_skill_name,skill_type,confidence_score,extraction_method
+DB005,Data Visualization (Tableau/PowerBI),technical,0.9,manual
+DB006,Business Intelligence Tools,technical,0.9,manual
+DB010,Logical Reasoning,analytical,0.9,manual
+DB011,Machine Learning Algorithms,technical,0.9,manual
+DB012,Deep Learning Frameworks,technical,0.9,manual
+DB012,Deep Learning (TensorFlow/PyTorch),technical,0.9,manual
+DB014,Computer Vision,technical,0.9,manual
+CC001,SQL & Database Management,technical,0.95,manual
+CC001,SQL & Database Systems,technical,0.95,manual
+CC001,Advanced SQL & ETL,technical,0.95,manual
+CC002,Excel & Spreadsheets,technical,0.95,manual
+CC003,Data Visualization (Tableau/PowerBI),technical,0.95,manual
+CC003,Business Intelligence Tools,technical,0.95,manual
+CC004,Data Visualization (Tableau/PowerBI),technical,0.95,manual
+CC004,Business Intelligence Tools,technical,0.95,manual
+CC005,Python for Analytics,technical,0.95,manual
+CC006,Data Wrangling & Cleaning,technical,0.95,manual
+CC007,Machine Learning Algorithms,technical,0.95,manual
+CC008,Deep Learning Frameworks,technical,0.95,manual
+CC008,Deep Learning (TensorFlow/PyTorch),technical,0.95,manual
+CC009,Deep Learning (TensorFlow/PyTorch),technical,0.95,manual
+CC010,Computer Vision,technical,0.95,manual
+CC010,Natural Language Processing,technical,0.95,manual
+CC011,Natural Language Processing,technical,0.95,manual
+CC012,Cloud Platforms (AWS/GCP/Azure),technical,0.95,manual
+CC013,Cloud Platforms (AWS/GCP/Azure),technical,0.95,manual
+CC014,Python & Spark,technical,0.95,manual
+CC014,Big Data Technologies,technical,0.95,manual
+CC015,Large Language Models & RAG,technical,0.95,manual
+CC016,MLOps & Model Deployment,technical,0.95,manual
+CC017,Version Control & Git,technical,0.95,manual
+CC018,Containerization & DevOps,technical,0.95,manual
+CC019,System Design Basics,analytical,0.95,manual
+CC019,System Design & Architecture,analytical,0.95,manual
+CC020,Data Structures & Algorithms,technical,0.95,manual
+CC020,Problem Solving & Logic,analytical,0.95,manual
+CC021,Logical Reasoning,analytical,0.95,manual
+CC022,Quantitative Analysis,analytical,0.95,manual
+CC023,Problem Solving & Logic,analytical,0.95,manual
+SK0001,SQL & Database Management,technical,0.85,generated
+SK0002,SQL & Database Management,technical,0.85,generated
+SK0003,Excel & Spreadsheets,technical,0.85,generated
+SK0004,Excel & Spreadsheets,technical,0.85,generated
+SK0005,Data Visualization (Tableau/PowerBI),technical,0.85,generated
+SK0006,Data Visualization (Tableau/PowerBI),technical,0.85,generated
+SK0007,Python for Analytics,technical,0.85,generated
+SK0008,Python for Analytics,technical,0.85,generated
+SK0009,Logical Reasoning,analytical,0.85,generated
+SK0010,Logical Reasoning,analytical,0.85,generated
+SK0011,Quantitative Analysis,analytical,0.85,generated
+SK0012,Quantitative Analysis,analytical,0.85,generated
+SK0013,Advanced SQL & ETL,technical,0.85,generated
+SK0014,Advanced SQL & ETL,technical,0.85,generated
+SK0015,Python/R for Statistics,technical,0.85,generated
+SK0016,Python/R for Statistics,technical,0.85,generated
+SK0017,Business Intelligence Tools,technical,0.85,generated
+SK0018,Business Intelligence Tools,technical,0.85,generated
+SK0019,Statistical Modeling,analytical,0.85,generated
+SK0020,Statistical Modeling,analytical,0.85,generated
+SK0021,Data Wrangling & Cleaning,technical,0.85,generated
+SK0022,Data Wrangling & Cleaning,technical,0.85,generated
+SK0023,Presentation & Communication,soft,0.85,generated
+SK0024,Presentation & Communication,soft,0.85,generated
+SK0025,Python & Data Structures,technical,0.85,generated
+SK0026,Python & Data Structures,technical,0.85,generated
+SK0027,Machine Learning Algorithms,technical,0.85,generated
+SK0028,Machine Learning Algorithms,technical,0.85,generated
+SK0029,Deep Learning Frameworks,technical,0.85,generated
+SK0030,Deep Learning Frameworks,technical,0.85,generated
+SK0031,Feature Engineering,technical,0.85,generated
+SK0032,Feature Engineering,technical,0.85,generated
+SK0033,MLOps & Model Deployment,technical,0.85,generated
+SK0034,MLOps & Model Deployment,technical,0.85,generated
+SK0035,Statistics & Linear Algebra,analytical,0.85,generated
+SK0036,Statistics & Linear Algebra,analytical,0.85,generated
+SK0037,Advanced Python Programming,technical,0.85,generated
+SK0038,Advanced Python Programming,technical,0.85,generated
+SK0039,Deep Learning (TensorFlow/PyTorch),technical,0.85,generated
+SK0040,Deep Learning (TensorFlow/PyTorch),technical,0.85,generated
+SK0041,Natural Language Processing,technical,0.85,generated
+SK0042,Natural Language Processing,technical,0.85,generated
+SK0043,Computer Vision,technical,0.85,generated
+SK0044,Computer Vision,technical,0.85,generated
+SK0045,Large Language Models & RAG,technical,0.85,generated
+SK0046,Large Language Models & RAG,technical,0.85,generated
+SK0047,System Design & Architecture,analytical,0.85,generated
+SK0048,System Design & Architecture,analytical,0.85,generated
+SK0049,Cloud Platforms (AWS/GCP/Azure),technical,0.85,generated
+SK0050,Cloud Platforms (AWS/GCP/Azure),technical,0.85,generated
+SK0051,Cloud Platforms (AWS/GCP/Azure),technical,0.85,generated
+SK0052,Data Pipeline & ETL Tools,technical,0.85,generated
+SK0053,Data Pipeline & ETL Tools,technical,0.85,generated
+SK0054,Big Data Technologies,technical,0.85,generated
+SK0055,Big Data Technologies,technical,0.85,generated
+SK0056,Containerization & DevOps,technical,0.85,generated
+SK0057,Containerization & DevOps,technical,0.85,generated
+SK0058,Data Structures & Algorithms,technical,0.85,generated
+SK0059,Data Structures & Algorithms,technical,0.85,generated
+SK0060,Problem Solving & Logic,analytical,0.85,generated
+SK0061,Problem Solving & Logic,analytical,0.85,generated
+SK0062,Version Control & Git,technical,0.85,generated
+SK0063,Version Control & Git,technical,0.85,generated
+SK0064,Object-Oriented Programming,technical,0.85,generated
+SK0065,Object-Oriented Programming,technical,0.85,generated
+SK0066,System Design Basics,analytical,0.85,generated
+SK0067,System Design Basics,analytical,0.85,generated
+SK0068,Communication Skills,soft,0.85,generated
+SK0069,Communication Skills,soft,0.85,generated

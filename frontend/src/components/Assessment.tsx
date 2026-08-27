@@ -294,6 +294,11 @@ export default function Assessment({ defaultRoleId, username }: Props) {
                 AI detected: {result.ai_role}
               </span>
             )}
+            {result.employability_class && (
+              <span className={`emp-badge ${result.employability_class === 'High' ? 'high' : 'low'}`}>
+                Employability: {result.employability_class} ({result.employability_score}%)
+              </span>
+            )}
           </div>
 
           <div

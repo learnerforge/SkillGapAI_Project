@@ -108,6 +108,8 @@ export interface AnalyzeResult {
   }[]
   ai_role?: string
   ai_error?: string
+  employability_score?: number
+  employability_class?: 'High' | 'Low'
 }
 
 export interface ProgressItem {
